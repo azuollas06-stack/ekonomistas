@@ -9,6 +9,10 @@ const NOTES: Record<string, string> = {
   "design-03": "Aiškus tinklelis, skaičiai ir struktūra. Labiau korporatyvu, bet asmeniška.",
   "design-04": "Marius – svetainės veidas: didelės nuotraukos, istorija ir „Apie mane“ pirmame plane.",
   "design-05": "Tamsi, rami privačios bankininkystės estetika su didele fotografija.",
+  "design-06": "Tamsiai žalia ir laimo. Augimo kreivė piešiasi slenkant, braukiamos kortelės, lipni CTA juosta.",
+  "design-07": "Kaip mobilioji programėlė: bento plytelės, apatinė navigacija, iššokantis „Kur esate šiandien?“ lapas.",
+  "design-08": "Drąsi judanti tipografija: besikeičiantis žodis, bėganti eilutė, viena ant kitos kraunamos kortelės.",
+  "design-09": "Tamsi aurora, stiklinės kortelės, švytintys kraštai ir 3D pakrypimas.",
 };
 
 export default function Index() {
@@ -18,8 +22,8 @@ export default function Index() {
         <p className={s.kicker}>{brand.name} · pagrindinio puslapio dizaino kryptys</p>
         <h1 className={s.title}>Pasirinkite kryptį</h1>
         <p className={s.lead}>
-          Visi penki variantai naudoja tą patį turinį ir prekės ženklą. Skiriasi išdėstymas, tipografija, nuotraukų
-          panaudojimas ir bendras charakteris.
+          Visi variantai naudoja tą patį turinį. 01–05 laikosi prekės ženklo spalvų ir ramaus stiliaus, 06–09 – laisvesni
+          eksperimentai su kitomis spalvomis ir daugiau animacijų, kurti pirmiausia telefonui.
         </p>
       </header>
       <ol role="list" className={s.list}>

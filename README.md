@@ -10,6 +10,14 @@
 | `/design-03`  | Moderni konsultanto        |
 | `/design-04`  | Asmeninis prekės ženklas   |
 | `/design-05`  | Tamsi premium              |
+| `/design-06`  | Augimo kreivė (eksperimentinė, mobile-first) |
+| `/design-07`  | Fintech programėlė (eksperimentinė, mobile-first) |
+| `/design-08`  | Kinetinė tipografija (eksperimentinė, mobile-first) |
+| `/design-09`  | Aurora / stiklas (eksperimentinė, mobile-first) |
+
+06–09 naudoja laisvas spalvas ir daugiau animacijų. Animacijos – be bibliotekų (`components/fx/`):
+CSS scroll-driven animacijos (su atsarginiu variantu senesnėms naršyklėms), `CountUp`, `WordCycler`,
+`GrowthLine`, `Tilt`, `StickyCta`, `SituationSheet` (naršyklės `<dialog>`). Visur gerbiamas `prefers-reduced-motion`.
 
 ## Paleidimas
 

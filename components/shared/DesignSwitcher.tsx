@@ -7,15 +7,19 @@ export const DESIGNS = [
   { slug: "design-03", name: "Moderni konsultanto" },
   { slug: "design-04", name: "Asmeninis prekės ženklas" },
   { slug: "design-05", name: "Tamsi premium" },
+  { slug: "design-06", name: "Augimo kreivė" },
+  { slug: "design-07", name: "Fintech programėlė" },
+  { slug: "design-08", name: "Kinetinė tipografija" },
+  { slug: "design-09", name: "Aurora" },
 ] as const;
 
 /** Peržiūros įrankis klientui – galutinėje svetainėje nebus. */
-export default function DesignSwitcher({ current }: { current: number }) {
+export default function DesignSwitcher({ current, className }: { current: number; className?: string }) {
   const total = DESIGNS.length;
   const prev = DESIGNS[(current - 2 + total) % total];
   const next = DESIGNS[current % total];
   return (
-    <nav className={styles.root} aria-label="Dizaino krypčių peržiūra">
+    <nav className={`${styles.root} ${className ?? ""}`} aria-label="Dizaino krypčių peržiūra">
       <Link href={`/${prev.slug}`} className={styles.arrow} aria-label={`Ankstesnė kryptis: ${prev.name}`}>
         ←
       </Link>
