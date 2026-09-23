@@ -39,6 +39,7 @@
   gap: 0.75rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--g);
   margin: 0 calc(var(--g) * -1);
   padding: 0 var(--g) 0.5rem;
   scrollbar-width: none;

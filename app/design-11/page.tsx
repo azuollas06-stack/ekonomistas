@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import ConsultantPage from "@/components/variants/ConsultantPage";
+import ConsultantPro from "@/components/variants/ConsultantPro";
 
 export const metadata: Metadata = { title: "Kryptis 11 – Konsultanto su judančiomis kortelėmis | Marius Lencevičius" };
 
-/** 03 kryptis + 05 krypties hero + paslaugų kortelės, kurios kraunasi slenkant (iš 08) + atsiliepimai. */
+/**
+ * 03 struktūra + 05 hero + slenkant „suvažiuojančios“ paslaugų kortelės (iš 08) + atsiliepimai.
+ * Švaresnė, profesionalesnė versija su subtiliomis animacijomis (ConsultantPro).
+ */
 export default function Design11() {
-  return <ConsultantPage current={11} heroStyle="dark" servicesLayout="stack" withTestimonials />;
+  return <ConsultantPro current={11} />;
 }
