@@ -19,8 +19,8 @@
   --header-h: 4.25rem;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
-  /* hero animacijos laukia, kol pakils įžangos uždanga */
-  --base: 1.35s;
+  /* hero animacijos prasideda, kai įžangos fonas pradeda tirpti */
+  --base: 2.05s;
 
   background: var(--bg);
   color: var(--fg);
@@ -1180,23 +1180,53 @@ a:focus-visible > .arrow {
    13 KRYPTIES „PARAŠO“ DETALĖS
    ===================================================================== */
 
-/* Švelni grūdėtumo tekstūra tamsiose sekcijose (premium popieriaus pojūtis) */
-.hero::after,
-.intro::after,
-.final::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
+/* ---------- ŠVELNŪS PERĖJIMAI tarp tamsių ir šviesių sekcijų ---------- */
+/* „Eased“ gradientas (daug sustojimų) oklab erdvėje – be juostelių ir be kietos ribos */
+.fadeToLight,
+.fadeToDark {
+  height: clamp(6rem, 18vw, 13rem);
   pointer-events: none;
-  opacity: 0.07;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.fadeToLight {
+  background: linear-gradient(
+    to bottom,
+    var(--dark) 0%,
+    color-mix(in oklab, var(--dark) 87%, var(--bg)) 19%,
+    color-mix(in oklab, var(--dark) 67%, var(--bg)) 34%,
+    color-mix(in oklab, var(--dark) 46%, var(--bg)) 47%,
+    color-mix(in oklab, var(--dark) 27%, var(--bg)) 60%,
+    color-mix(in oklab, var(--dark) 12%, var(--bg)) 74%,
+    color-mix(in oklab, var(--dark) 3%, var(--bg)) 88%,
+    var(--bg) 100%
+  );
+}
+.fadeToDark {
+  background: linear-gradient(
+    to top,
+    var(--dark) 0%,
+    color-mix(in oklab, var(--dark) 87%, var(--bg)) 19%,
+    color-mix(in oklab, var(--dark) 67%, var(--bg)) 34%,
+    color-mix(in oklab, var(--dark) 46%, var(--bg)) 47%,
+    color-mix(in oklab, var(--dark) 27%, var(--bg)) 60%,
+    color-mix(in oklab, var(--dark) 12%, var(--bg)) 74%,
+    color-mix(in oklab, var(--dark) 3%, var(--bg)) 88%,
+    var(--bg) 100%
+  );
+}
+/* sekcija po perėjimo – mažesnis viršutinis tarpas, nes jį jau sudaro gradientas */
+.section.tight {
+  padding-top: clamp(1rem, 4vw, 2.5rem);
 }
 .intro,
 .final {
   position: relative;
   overflow: hidden;
+  margin-top: 0;
+}
+/* antraštės elementai virš atidaryto meniu */
+.brand {
+  position: relative;
+  z-index: 1;
 }
 
 /* Pulsuojantis „gyvas“ taškas */
@@ -1257,7 +1287,7 @@ a:focus-visible > .arrow {
   fill: none;
   stroke-width: 2;
   stroke-linecap: round;
-  stroke-dasharray: 1;
+  stroke-dasharray: 1 2;
   stroke-dashoffset: 1;
   animation: draw 2.6s var(--ease-soft) forwards;
   animation-delay: calc(var(--base) + 0.5s);
@@ -1339,7 +1369,6 @@ a:focus-visible > .arrow {
   overflow: hidden;
   padding: 1.1rem 0;
   background: var(--dark);
-  border-top: 1px solid color-mix(in srgb, var(--cream) 10%, transparent);
   color: color-mix(in srgb, var(--cream) 62%, transparent);
   white-space: nowrap;
 }
@@ -1572,7 +1601,7 @@ a:focus-visible > .arrow {
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .finalStroke path {
-      stroke-dasharray: 1;
+      stroke-dasharray: 1 2;
       animation: drawScroll linear both;
       animation-timeline: view();
       animation-range: entry 10% cover 60%;

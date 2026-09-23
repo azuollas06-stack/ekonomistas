@@ -22,8 +22,8 @@ import {
   sampleTestimonials,
 } from "@/content/site";
 import Photo from "@/components/shared/Photo";
-import MobileNav from "@/components/shared/MobileNav";
-import CalculatorTeaser from "@/components/shared/CalculatorTeaser";
+import SignatureNav from "@/components/fx/SignatureNav";
+import CalculatorPro from "@/components/fx/CalculatorPro";
 import ConsentButton from "@/components/shared/ConsentButton";
 import DesignSwitcher from "@/components/shared/DesignSwitcher";
 import CountUp from "@/components/fx/CountUp";
@@ -87,7 +87,7 @@ export default function ConsultantSignature({ current }: { current: number }) {
 
   return (
     <div className={s.page}>
-      <IntroCurtain monogram="ML" label={brand.name} />
+      <IntroCurtain label={brand.name} />
 
       <a className="skip-link" href="#turinys">
         Pereiti prie turinio
@@ -101,19 +101,15 @@ export default function ConsultantSignature({ current }: { current: number }) {
             </span>
             <span className={s.brandName}>{brand.name}</span>
           </a>
-          <nav aria-label="Pagrindinė navigacija" className={s.nav}>
-            <ul role="list">
-              {nav.slice(1).map((l) => (
-                <li key={l.href}>
-                  <a href={l.href}>{l.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <a href={cta.href} className={s.headerCta}>
-            {cta.primary}
-          </a>
-          <MobileNav links={nav} ctaLabel={cta.intro} ctaHref={cta.href} panelClassName={s.mobilePanel} />
+          <SignatureNav
+            links={nav}
+            ctaLabel={cta.intro}
+            ctaHref={cta.href}
+            desktopCtaLabel={cta.primary}
+            name={brand.name}
+            role={brand.role}
+            instagram={brand.instagram}
+          />
         </div>
       </ScrollHeader>
 
@@ -179,9 +175,10 @@ export default function ConsultantSignature({ current }: { current: number }) {
             ))}
           </div>
         </div>
+        <div className={s.fadeToLight} aria-hidden="true" />
 
         {/* ĮŽANGA – žodžiai užsidega slenkant */}
-        <section className={s.section} aria-labelledby="problem-title">
+        <section className={`${s.section} ${s.tight}`} aria-labelledby="problem-title">
           <p className={s.eyebrow}>Įžanga</p>
           <h2 id="problem-title" className={s.statementTitle}>
             {problem.title}
@@ -272,6 +269,7 @@ export default function ConsultantSignature({ current }: { current: number }) {
         </section>
 
         {/* POKALBIS */}
+        <div className={s.fadeToDark} aria-hidden="true" />
         <section className={s.intro} aria-labelledby="intro-title">
           <div className={s.introInner}>
             <div>
@@ -310,8 +308,10 @@ export default function ConsultantSignature({ current }: { current: number }) {
           </div>
         </section>
 
+        <div className={s.fadeToLight} aria-hidden="true" />
+
         {/* PLANO PAVYZDYS */}
-        <section className={s.section} aria-labelledby="plan-title">
+        <section className={`${s.section} ${s.tight}`} aria-labelledby="plan-title">
           <div className={s.split}>
             <div className={s.splitText}>
               <p className={s.eyebrow}>Rezultatas</p>
@@ -414,8 +414,8 @@ export default function ConsultantSignature({ current }: { current: number }) {
               {calculator.lead}
             </p>
           </div>
-          <div className={s.calc} data-reveal>
-            <CalculatorTeaser />
+          <div data-reveal>
+            <CalculatorPro />
           </div>
         </section>
 
@@ -471,6 +471,7 @@ export default function ConsultantSignature({ current }: { current: number }) {
         </section>
 
         {/* CTA */}
+        <div className={s.fadeToDark} aria-hidden="true" />
         <section id="kontaktai" className={s.final} aria-labelledby="final-title">
           <GrowthStroke className={s.finalStroke} id="gs-final" />
           <div className={s.finalInner}>

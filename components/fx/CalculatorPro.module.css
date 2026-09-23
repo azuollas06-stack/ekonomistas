@@ -1,0 +1,298 @@
+.root {
+  --fg: #22232f;
+  --muted: #5f6178;
+  --line: rgb(74 78 105 / 0.14);
+  --ink: #4a4e69;
+  --soft: #f4f1ee;
+
+  container-type: inline-size;
+  display: grid;
+  gap: 1.25rem;
+  color: var(--fg);
+}
+.root :focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+@media (min-width: 960px) {
+  .root {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+}
+
+/* ---------- REZULTATAS (tamsi kortelė) ---------- */
+.result {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(40rem circle at 100% 0%, rgb(242 233 228 / 0.08), transparent 55%),
+    #17181f;
+  color: #f2e9e4;
+}
+@media (min-width: 960px) {
+  .result {
+    padding: 2.25rem;
+  }
+}
+.resultHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.badge {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgb(242 233 228 / 0.3);
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(242 233 228 / 0.75);
+}
+.year {
+  font-size: 0.8125rem;
+  color: rgb(242 233 228 / 0.65);
+  font-variant-numeric: tabular-nums;
+}
+.total {
+  font-size: clamp(2.5rem, 11cqi, 4.25rem);
+  line-height: 1;
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+.split {
+  display: flex;
+  gap: 3px;
+  height: 6px;
+  margin: 1.5rem 0 1rem;
+}
+.split span {
+  border-radius: 6px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.split span:first-child {
+  background: rgb(242 233 228 / 0.35);
+}
+.split span:last-child {
+  background: #f2e9e4;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  margin: 0 0 1.5rem;
+}
+.legend dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(242 233 228 / 0.65);
+}
+.legend dd {
+  margin: 0.2rem 0 0;
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+.keyPaid,
+.keyGrowth {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: rgb(242 233 228 / 0.35);
+}
+.keyGrowth {
+  background: #f2e9e4;
+}
+
+/* ---------- GRAFIKAS ---------- */
+.chartWrap {
+  position: relative;
+  margin-top: auto;
+  color: #f2e9e4;
+}
+.plot {
+  position: relative;
+}
+.chart {
+  display: block;
+  width: 100%;
+  height: clamp(170px, 34cqi, 260px);
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+.grid {
+  stroke: rgb(242 233 228 / 0.07);
+  stroke-width: 1;
+}
+.valueArea,
+.paidArea,
+.valueLine,
+.paidLine {
+  transition: d 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.paidArea {
+  fill: rgb(242 233 228 / 0.08);
+}
+.valueLine {
+  fill: none;
+  stroke: #f2e9e4;
+  stroke-width: 2.25;
+}
+.paidLine {
+  fill: none;
+  stroke: rgb(242 233 228 / 0.5);
+  stroke-width: 1.25;
+  stroke-dasharray: 4 5;
+}
+.cursor {
+  stroke: rgb(242 233 228 / 0.4);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+.marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: #f2e9e4;
+  box-shadow: 0 0 0 5px rgb(242 233 228 / 0.16), 0 0 20px rgb(242 233 228 / 0.5);
+  pointer-events: none;
+  transition:
+    left 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    top 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+  font-size: 0.6875rem;
+  color: rgb(242 233 228 / 0.5);
+  font-variant-numeric: tabular-nums;
+}
+.hint {
+  margin-top: 0.9rem;
+  font-size: 0.75rem;
+  color: rgb(242 233 228 / 0.45);
+}
+
+/* ---------- VALDYMAS (šviesi kortelė) ---------- */
+.controls {
+  display: grid;
+  gap: 1.6rem;
+  align-content: start;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 1px 0 var(--line), 0 30px 60px -45px rgb(34 35 47 / 0.45);
+}
+@media (min-width: 960px) {
+  .controls {
+    padding: 2.25rem;
+  }
+}
+.field {
+  display: grid;
+  gap: 0.75rem;
+}
+.fieldHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.fieldLabel {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.value {
+  font-size: 1.125rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: var(--soft);
+}
+.presets button {
+  min-height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.presets button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--fg);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 0 0 1px var(--line);
+}
+
+.field input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.field input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--ink) var(--p), var(--soft) var(--p));
+}
+.field input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--soft);
+}
+.field input[type="range"]::-moz-range-progress {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--ink);
+}
+.field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 0 0 1px var(--line), 0 2px 8px rgb(34 35 47 / 0.25);
+  transition: transform 0.2s;
+}
+.field input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 0 0 1px var(--line), 0 2px 8px rgb(34 35 47 / 0.25);
+}
+.field input[type="range"]:hover::-webkit-slider-thumb,
+.field input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+.disclaimer {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.75rem;
+  color: var(--muted);
+}

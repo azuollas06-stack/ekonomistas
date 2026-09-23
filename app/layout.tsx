@@ -37,7 +37,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="lt">
+    // suppressHydrationWarning: 13 krypties įžangos skriptas prieš hidrataciją prideda klasę <html> elementui
+    <html lang="lt" suppressHydrationWarning>
       <body>
         {children}
         <RevealObserver />
