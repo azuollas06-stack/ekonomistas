@@ -1,0 +1,113 @@
+/* Tema: --hs-fg, --hs-muted, --hs-line, --hs-card, --hs-accent, --hs-edge (kairė paraštė) */
+.wrap {
+  position: relative;
+}
+.pin {
+  --fg: var(--hs-fg, #22232f);
+  --muted: var(--hs-muted, #5f6178);
+  --line: var(--hs-line, rgb(74 78 105 / 0.14));
+  --card: var(--hs-card, #fff);
+  --accent: var(--hs-accent, #4a4e69);
+  --edge: var(--hs-edge, 1.25rem);
+
+  color: var(--fg);
+}
+.head {
+  padding: 0 var(--edge);
+  margin-bottom: 2rem;
+}
+.progress {
+  display: none;
+}
+.track {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0 var(--edge);
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.5rem 1.35rem;
+  border-radius: 1.1rem;
+  background: var(--card);
+  box-shadow: 0 1px 0 var(--line), 0 30px 60px -45px rgb(34 35 47 / 0.5);
+  overflow: hidden;
+}
+.n {
+  font-size: 3.5rem;
+  line-height: 0.9;
+  font-weight: 200;
+  letter-spacing: -0.06em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.title {
+  margin-top: 0.5rem;
+  font-size: 1.375rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.body {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+.final {
+  justify-content: space-between;
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Kompiuteris: prisegta sekcija, horizontalus takelis */
+@media (min-width: 960px) and (prefers-reduced-motion: no-preference) {
+  .wrap[data-active="true"] .pin {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .wrap[data-active="true"] .track {
+    display: flex;
+    gap: 1.25rem;
+    width: max-content;
+    will-change: transform;
+  }
+  .wrap[data-active="true"] .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+  }
+  .wrap[data-active="true"] .progress {
+    display: block;
+    flex: none;
+    width: 14rem;
+    height: 2px;
+    margin-bottom: 0.9rem;
+    background: var(--line);
+  }
+  .wrap[data-active="true"] .progress span {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    transform: scaleX(var(--p, 0));
+    transform-origin: left;
+  }
+  .wrap[data-active="true"] .card {
+    width: 24rem;
+    min-height: min(42vh, 26rem);
+    padding: 2.25rem 2rem;
+  }
+  .wrap[data-active="true"] .n {
+    font-size: 6rem;
+    margin-bottom: auto;
+  }
+  .wrap[data-active="true"] .title {
+    font-size: 1.75rem;
+  }
+}

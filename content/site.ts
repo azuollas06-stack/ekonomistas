@@ -195,6 +195,117 @@ export const xray = {
   ],
 };
 
+/**
+ * „Kelias iki pokalbio“ – 3 klausimai. Atsakymai niekur nesiunčiami ir nesaugomi;
+ * jie tik parenka paslaugą ir bendro pobūdžio paaiškinimą (ne investavimo rekomendaciją).
+ */
+export const guidedPath = {
+  title: "Raskime jums tinkamą pradžią",
+  lead: "Trys trumpi klausimai – ir matysite, nuo ko būtų prasminga pradėti pokalbį.",
+  privacy: "Atsakymai niekur nesiunčiami ir nesaugomi.",
+  horizon: {
+    question: "Kokiam laikotarpiui planuojate?",
+    options: [
+      { id: "short", label: "Iki 3 metų", note: "Trumpesniam laikotarpiui ypač svarbus rizikos valdymas ir lėšų prieinamumas." },
+      { id: "mid", label: "3–10 metų", note: "Vidutiniam laikotarpiui dažnai ieškoma balanso tarp augimo ir stabilumo." },
+      { id: "long", label: "Daugiau nei 10 metų", note: "Ilgas laikotarpis leidžia labiau remtis reguliarumu ir diversifikacija." },
+    ],
+  },
+  experience: {
+    question: "Kiek patirties turite investuojant?",
+    options: [
+      { id: "none", label: "Dar neinvestavau", note: "Viską paaiškinsiu nuo pagrindų – išankstinių žinių nereikia." },
+      { id: "some", label: "Šiek tiek bandžiau", note: "Pradėsime nuo to, ką jau žinote, ir aiškiai sudėliosime likusius dalykus." },
+      { id: "regular", label: "Investuoju reguliariai", note: "Galėsime kartu peržiūrėti esamą portfelį ir jo struktūrą." },
+    ],
+  },
+  resultKicker: "Jums tinkamiausia pradžia",
+  restart: "Pradėti iš naujo",
+  back: "Atgal",
+};
+
+/** DEMONSTRACINIS portfelio palyginimas „prieš / po“ – išgalvoti duomenys, ne rezultatų pažadas. */
+export const portfolioCompare = {
+  title: "Ką reiškia struktūruotas portfelis",
+  lead: "Pavyzdys, kaip konsultacijos metu gali pasikeisti požiūris į tą patį portfelį: kas jame yra, kiek jis diversifikuotas ir kokia rizika prisiimama.",
+  badge: "Demonstracinis pavyzdys",
+  disclaimer:
+    "Duomenys išgalvoti ir skirti tik iliustracijai. Tai nėra rezultatų pažadas ar investavimo rekomendacija – sprendimai priklauso nuo jūsų tikslų ir rizikos tolerancijos.",
+  states: {
+    before: {
+      label: "Prieš konsultaciją",
+      assets: [
+        { label: "Pavienės akcijos", value: 62 },
+        { label: "Akcijų ETF", value: 18 },
+        { label: "Obligacijų ETF", value: 0 },
+        { label: "Grynieji pinigai", value: 20 },
+      ],
+      regions: [
+        { label: "Šiaurės Amerika", value: 84 },
+        { label: "Europa", value: 11 },
+        { label: "Kiti regionai", value: 5 },
+      ],
+      metrics: [
+        { label: "Pozicijų", value: "3" },
+        { label: "Didžiausia pozicija", value: "41 %" },
+        { label: "Vid. išlaidų koef.", value: "0,74 %" },
+      ],
+      risk: { value: 4, text: "Aukšta" },
+      note: "Didelė dalis – keliose pavienėse akcijose ir viename regione.",
+    },
+    after: {
+      label: "Po konsultacijos",
+      assets: [
+        { label: "Pavienės akcijos", value: 10 },
+        { label: "Akcijų ETF", value: 55 },
+        { label: "Obligacijų ETF", value: 30 },
+        { label: "Grynieji pinigai", value: 5 },
+      ],
+      regions: [
+        { label: "Šiaurės Amerika", value: 55 },
+        { label: "Europa", value: 27 },
+        { label: "Kiti regionai", value: 18 },
+      ],
+      metrics: [
+        { label: "Pozicijų", value: "7" },
+        { label: "Didžiausia pozicija", value: "32 %" },
+        { label: "Vid. išlaidų koef.", value: "0,21 %" },
+      ],
+      risk: { value: 3, text: "Vidutinė" },
+      note: "Rizika paskirstyta tarp turto klasių ir regionų pagal pasirinktą profilį.",
+    },
+  },
+};
+
+/**
+ * DEMONSTRACINIS konsultacijos plano pavyzdys.
+ * TODO: patvirtinti su klientu, ar po konsultacijos pateikiamas rašytinis planas ir kokios formos.
+ */
+export const planPreview = {
+  title: "Kaip gali atrodyti jūsų planas",
+  lead: "Konsultacijos esmė – aiškumas. Pavyzdys, kaip gali būti susisteminti jūsų tikslai, sprendimai ir tolesni žingsniai.",
+  badge: "Pavyzdys",
+  disclaimer: "Demonstracinis pavyzdys – tikslus turinys ir forma priklauso nuo jūsų situacijos.",
+  pages: [
+    {
+      title: "Situacijos santrauka",
+      rows: ["Tikslas: kaupti ilgalaikiam tikslui", "Laikotarpis: daugiau nei 10 metų", "Rizikos tolerancija: vidutinė"],
+    },
+    {
+      title: "Lėšų paskirstymas",
+      bars: [
+        { label: "Akcijų ETF", value: 60 },
+        { label: "Obligacijų ETF", value: 30 },
+        { label: "Grynieji", value: 10 },
+      ],
+    },
+    {
+      title: "Tolesni žingsniai",
+      rows: ["Pasirinkti platformą pagal įkainius", "Nustatyti reguliarią investiciją", "Peržiūrėti strategiją kas 12 mėn."],
+    },
+  ],
+};
+
 export const calculator = {
   title: "Skaičiuoklė",
   lead: "Pažiūrėkite, kaip laikas ir reguliarumas gali paveikti sukauptą sumą.",
