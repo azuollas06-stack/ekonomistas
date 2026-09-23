@@ -1,0 +1,630 @@
+/* 02 – Editorial: finansinio leidinio atvartas. Rubrikos paraštėje, asimetrija, plonos linijos. */
+.page {
+  --bg: var(--brand-cream);
+  --fg: #2a2c40;
+  --muted: #595c76;
+  --line: color-mix(in srgb, var(--brand-ink) 32%, transparent);
+  --rule: var(--brand-ink);
+  --accent: var(--brand-ink);
+  --on-accent: var(--brand-cream);
+  --surface: color-mix(in srgb, #fff 35%, var(--brand-cream));
+  --g: clamp(1.25rem, 4vw, 3.5rem);
+  --max: 1400px;
+  --rail: 11rem;
+
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 1.0625rem;
+}
+
+.masthead,
+.hero,
+.row,
+.final,
+.footer {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--g);
+}
+
+/* MASTHEAD */
+.masthead {
+  padding-top: 1.25rem;
+}
+.mastRow {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.9rem 0;
+  border-top: 3px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.wordmark {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  margin-right: auto;
+}
+.nav {
+  display: none;
+}
+.nav ul {
+  display: flex;
+  gap: 1.75rem;
+  font-size: 0.875rem;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--muted);
+}
+.nav a:hover {
+  color: var(--fg);
+}
+.mastCta {
+  display: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding-left: 1.75rem;
+  border-left: 1px solid var(--line);
+}
+@media (min-width: 960px) {
+  .nav,
+  .mastCta {
+    display: block;
+  }
+}
+.mobilePanel {
+  --bg: var(--brand-cream);
+}
+
+/* BENDRA */
+.h2 {
+  font-size: clamp(2rem, 3.8vw, 3.5rem);
+  line-height: 1.02;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.25rem;
+}
+.muted {
+  color: var(--muted);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.1rem;
+  padding: 0 1.5rem;
+  background: var(--accent);
+  color: var(--on-accent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: background 0.25s;
+}
+.btn:hover {
+  background: var(--ink-800);
+}
+.btnLight {
+  background: var(--brand-cream);
+  color: var(--ink-800);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8125rem;
+}
+.btnLight:hover {
+  background: #fff;
+}
+.link {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 2rem;
+}
+
+/* RUBRIKOS EILUTĖ */
+.row {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: clamp(4rem, 9vw, 8rem);
+}
+.row > * {
+  min-width: 0;
+}
+.rubric {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding-top: 0.9rem;
+  border-top: 3px solid var(--rule);
+  align-self: start;
+}
+@media (min-width: 960px) {
+  .row {
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: 3rem;
+  }
+  .row > :last-child {
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+  }
+}
+.headPair {
+  display: grid;
+  gap: 0.5rem 4rem;
+  margin-bottom: 3rem;
+}
+@media (min-width: 960px) {
+  .headPair {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: end;
+  }
+  .headPair .h2 {
+    margin-bottom: 0;
+  }
+}
+
+/* HERO */
+.hero {
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+}
+.heroKicker {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.heroTitle {
+  font-size: clamp(3.25rem, 10.4vw, 10.5rem);
+  line-height: 0.9;
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+.heroIndent {
+  display: inline-block;
+  padding-left: 0;
+}
+@media (min-width: 960px) {
+  .heroIndent {
+    padding-left: calc(var(--rail) + 3rem);
+  }
+}
+
+.spread {
+  display: grid;
+  gap: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+@media (min-width: 960px) {
+  .spread {
+    grid-template-columns: var(--rail) minmax(0, 1.25fr) minmax(0, 0.9fr);
+    gap: 3rem;
+  }
+}
+.facts ul {
+  display: grid;
+  gap: 0.9rem;
+  font-size: 0.875rem;
+}
+.facts li {
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+.factsTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.heroCopy {
+  max-width: 38rem;
+}
+.dropcap {
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+}
+.dropcap::first-letter {
+  float: left;
+  font-size: 4.6em;
+  line-height: 0.8;
+  font-weight: 500;
+  margin: 0.06em 0.1em 0 0;
+  color: var(--brand-ink);
+}
+.heroBody {
+  color: var(--muted);
+}
+.heroFigure figcaption,
+.articleFigure figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.heroPhoto {
+  aspect-ratio: 4 / 5;
+}
+@media (max-width: 959px) {
+  .heroFigure {
+    order: -1;
+  }
+  .heroPhoto {
+    aspect-ratio: 1 / 1;
+  }
+  .facts {
+    order: 2;
+  }
+}
+
+/* ĮŽANGA */
+.problemTitle {
+  font-size: clamp(1.875rem, 4vw, 3.75rem);
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  max-width: 20ch;
+  margin-bottom: 2.5rem;
+}
+.problemCols {
+  display: grid;
+  gap: 1.5rem 3rem;
+  max-width: 60rem;
+}
+@media (min-width: 760px) {
+  .problemCols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.problemBridge {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--rule);
+}
+
+/* PASLAUGOS – žurnalo tinklelis su linijomis */
+.services {
+  display: grid;
+  border-top: 1px solid var(--rule);
+}
+.service {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  padding: 2rem 0 2.5rem;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 760px) {
+  .services {
+    grid-template-columns: 1fr 1fr;
+  }
+  .service:nth-child(odd) {
+    padding-right: 2.5rem;
+    border-right: 1px solid var(--line);
+  }
+  .service:nth-child(even) {
+    padding-left: 2.5rem;
+  }
+}
+.service .link {
+  justify-self: start;
+  margin-top: 0.5rem;
+}
+.serviceTitle {
+  font-size: clamp(1.5rem, 2.4vw, 2.125rem);
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  max-width: 14ch;
+}
+
+/* PROCESAS – redakcinė laiko juosta */
+.timeline {
+  margin-top: 2.5rem;
+}
+.timeline li {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--line);
+}
+@media (min-width: 960px) {
+  .timeline li {
+    grid-template-columns: 9rem minmax(0, 22rem) minmax(0, 1fr);
+    align-items: baseline;
+  }
+  .timeline li > div {
+    display: contents;
+  }
+}
+.timelineN {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 0.85;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: var(--brand-ink);
+  font-variant-numeric: tabular-nums;
+}
+.timelineTitle {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.4rem;
+}
+
+/* POKALBIS – tamsus intarpas */
+.intro {
+  margin-top: clamp(4rem, 9vw, 8rem);
+  background: var(--brand-ink);
+  color: var(--brand-cream);
+}
+.introInner {
+  display: grid;
+  gap: 2.5rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 7vw, 6rem) var(--g);
+}
+@media (min-width: 960px) {
+  .introInner {
+    grid-template-columns: 1.1fr 1fr 1fr;
+    gap: 3.5rem;
+  }
+}
+.introKicker {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  opacity: 0.8;
+}
+.introTitle {
+  font-size: clamp(2.5rem, 4.6vw, 4.25rem);
+  line-height: 0.98;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+.introBody {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+.introLead {
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+.introList ul {
+  display: grid;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+.introList li {
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-cream) 25%, transparent);
+}
+.introNote {
+  margin-bottom: 1.75rem;
+  opacity: 0.85;
+}
+.intro :focus-visible {
+  outline-color: var(--brand-cream);
+}
+
+/* APIE – straipsnis */
+.articleTitle {
+  font-size: clamp(2.25rem, 5vw, 4.75rem);
+  line-height: 0.98;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  max-width: 16ch;
+  margin-bottom: 2.5rem;
+}
+.articleFigure {
+  margin-bottom: 2.5rem;
+}
+.articlePhoto {
+  aspect-ratio: 16 / 10;
+}
+@media (min-width: 960px) {
+  .articleFigure {
+    width: 72%;
+  }
+}
+.articleBody {
+  max-width: 62rem;
+}
+.articleBody p + p {
+  margin-top: 1rem;
+}
+@media (min-width: 900px) {
+  .articleBody {
+    columns: 2;
+    column-gap: 3.5rem;
+  }
+}
+.articleLead {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+.articleLead {
+  font-weight: 500;
+}
+.pull {
+  break-inside: avoid;
+  margin: 2rem 0;
+  padding: 1.25rem 0;
+  border-top: 3px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.pull p {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 !important;
+}
+
+/* X-RAY */
+.figureRow {
+  display: grid;
+  gap: 2.5rem;
+}
+@media (min-width: 1100px) {
+  .figureRow {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+    gap: 3.5rem;
+  }
+}
+.xray {
+  --surface: color-mix(in srgb, #fff 40%, var(--brand-cream));
+}
+
+/* UŽRAŠAI */
+.notes {
+  display: grid;
+  gap: 0;
+  margin-bottom: 2rem;
+}
+.notes li {
+  padding: 1.25rem 0 1.75rem;
+  border-top: 1px solid var(--line);
+}
+@media (min-width: 760px) {
+  .notes {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+  }
+}
+@media (min-width: 1100px) {
+  .notes {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.noteTag {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.noteTitle {
+  font-size: 1.1875rem;
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* DUK – interviu forma */
+.qa {
+  display: grid;
+  gap: 0 3.5rem;
+  margin: 2rem 0 0;
+}
+@media (min-width: 900px) {
+  .qa {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.qa > div {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+}
+.qa dt {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.qa dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* CTA */
+.final {
+  display: grid;
+  gap: 2rem;
+  padding-top: clamp(5rem, 11vw, 9rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+@media (min-width: 960px) {
+  .final {
+    grid-template-columns: 1.5fr 1fr;
+    align-items: end;
+    gap: 4rem;
+  }
+}
+.finalTitle {
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.9;
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  padding-top: 1.25rem;
+  border-top: 3px solid var(--rule);
+}
+.finalSide p {
+  color: var(--muted);
+  max-width: 26rem;
+}
+
+/* FOOTER – kolofonas */
+.footer {
+  padding-bottom: 5rem;
+  font-size: 0.875rem;
+}
+.footerName {
+  font-size: clamp(2.5rem, 9.6vw, 9.25rem);
+  line-height: 0.85;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  padding: 1.5rem 0 1.25rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 3px solid var(--rule);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.footerGrid {
+  display: grid;
+  gap: 1.25rem 3rem;
+  padding-top: 1.5rem;
+  color: var(--muted);
+}
+@media (min-width: 960px) {
+  .footerGrid {
+    grid-template-columns: 1fr 2fr 2fr auto;
+  }
+}
+.footerGrid ul {
+  display: grid;
+  gap: 0.35rem;
+}
+.footerGrid a,
+.linkButton {
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+}
+.footerGrid a:hover,
+.linkButton:hover {
+  color: var(--fg);
+}
+.disclaimer {
+  font-size: 0.8125rem;
+}

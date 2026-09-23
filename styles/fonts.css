@@ -1,0 +1,43 @@
+/*
+ * TT Commons Pro – oficialus prekės ženklo šriftas.
+ *
+ * Šriftų failų projekte dar nėra. Kai klientas pateiks licencijuotus failus:
+ *   1. Įdėkite .woff2 failus į /public/fonts/tt-commons-pro/
+ *      (pvz. TTCommonsPro-Regular.woff2, -Medium, -DemiBold, -Light)
+ *   2. Atkomentuokite @font-face blokus žemiau (pavadinimus suderinkite su failais).
+ *   3. Svarbiausią svorį (Regular) galima preload'inti app/layout.tsx.
+ *
+ * Kol failų nėra, naudojamas sisteminis šriftas (žr. --font-sans globals.css),
+ * sąmoningai neieškant „panašaus“ trečiųjų šalių šrifto.
+ */
+
+/*
+@font-face {
+  font-family: "TT Commons Pro";
+  src: url("/fonts/tt-commons-pro/TTCommonsPro-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Commons Pro";
+  src: url("/fonts/tt-commons-pro/TTCommonsPro-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Commons Pro";
+  src: url("/fonts/tt-commons-pro/TTCommonsPro-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Commons Pro";
+  src: url("/fonts/tt-commons-pro/TTCommonsPro-DemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+*/

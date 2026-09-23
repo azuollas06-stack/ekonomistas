@@ -1,0 +1,159 @@
+.root {
+  container-type: inline-size;
+  margin: 0;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  color: var(--fg);
+  background: var(--surface, transparent);
+  border: 1px solid var(--line);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+}
+.headNote {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+@container (min-width: 620px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.groupTitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+
+.bar {
+  display: flex;
+  gap: 2px;
+  height: 14px;
+  margin-bottom: 1rem;
+}
+.seg {
+  background: var(--fg);
+}
+
+.legend {
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.875rem;
+}
+.legend li {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+}
+.swatch {
+  width: 10px;
+  height: 10px;
+  background: var(--fg);
+}
+.legendValue {
+  font-variant-numeric: tabular-nums;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 1.5rem;
+  margin: 2rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+@container (min-width: 620px) {
+  .metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.metrics dt {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+.metrics dd {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.risk {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem !important;
+}
+.riskScale {
+  display: inline-flex;
+  gap: 3px;
+}
+.riskScale span {
+  width: 8px;
+  height: 18px;
+  border: 1px solid var(--fg);
+}
+.riskScale span[data-on="true"] {
+  background: var(--fg);
+}
+
+.findings {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.findings ul {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+}
+.findings li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+.findings li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 6px;
+  height: 1px;
+  background: currentColor;
+}
+
+.caption {
+  margin-top: 1.75rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.caption strong {
+  font-weight: 600;
+  color: var(--fg);
+}
