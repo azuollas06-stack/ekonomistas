@@ -224,6 +224,31 @@ export const notes = {
  */
 export const testimonials: { quote: string; name: string; context?: string }[] = [];
 
+/**
+ * PAVYZDINIAI atsiliepimai – tik dizaino peržiūrai, visada rodomi su žyme „Pavyzdys“.
+ * Tai NE tikri klientai. Prieš publikuojant pakeisti tikrais (`testimonials`) arba pašalinti.
+ */
+export const sampleTestimonials = [
+  {
+    quote:
+      "Apie investavimą galvojau kelerius metus, bet vis atidėdavau. Po pokalbio pagaliau supratau, nuo ko pradėti ir kodėl būtent taip.",
+    name: "Klientė",
+    context: "Pradedanti investuotoja",
+  },
+  {
+    quote:
+      "Turėjau kelis atsitiktinai pasirinktus ETF ir nežinojau, ar portfelis subalansuotas. Dabar suprantu, ką turiu ir kodėl.",
+    name: "Klientas",
+    context: "Jau investuojantis",
+  },
+  {
+    quote:
+      "Norėjome pradėti kaupti vaikui, bet pasiklydome pasiūlymuose. Viskas buvo paaiškinta paprastai ir be jokio spaudimo.",
+    name: "Tėvai",
+    context: "Kaupia vaiko ateičiai",
+  },
+];
+
 export const faq = {
   title: "Dažniausi klausimai",
   // TODO: atsakymus patvirtinti su klientu prieš publikuojant.

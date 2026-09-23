@@ -13,6 +13,9 @@ const NOTES: Record<string, string> = {
   "design-07": "Kaip mobilioji programėlė: bento plytelės, apatinė navigacija, iššokantis „Kur esate šiandien?“ lapas.",
   "design-08": "Drąsi judanti tipografija: besikeičiantis žodis, bėganti eilutė, viena ant kitos kraunamos kortelės.",
   "design-09": "Tamsi aurora, stiklinės kortelės, švytintys kraštai ir 3D pakrypimas.",
+  "design-10": "03 kryptis su tamsiu 05 hero (nuotrauka ir tekstas) ir atsiliepimų skiltimi.",
+  "design-11": "Kaip 10, bet paslaugų kortelės slenkant „suvažiuoja“ viena ant kitos (efektas iš 08).",
+  "design-12": "09 aurora ir stiklas, bet prekės ženklo spalvomis: tamsus fonas, šviesus kreminis tekstas.",
 };
 
 export default function Index() {

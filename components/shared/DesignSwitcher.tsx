@@ -11,6 +11,9 @@ export const DESIGNS = [
   { slug: "design-07", name: "Fintech programėlė" },
   { slug: "design-08", name: "Kinetinė tipografija" },
   { slug: "design-09", name: "Aurora" },
+  { slug: "design-10", name: "Konsultanto su tamsiu hero" },
+  { slug: "design-11", name: "Konsultanto su judančiomis kortelėmis" },
+  { slug: "design-12", name: "Aurora prekės ženklo spalvomis" },
 ] as const;
 
 /** Peržiūros įrankis klientui – galutinėje svetainėje nebus. */
