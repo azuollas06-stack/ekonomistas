@@ -150,6 +150,30 @@ export const introCall = {
   note: "Jokio įsipareigojimo.",
 };
 
+/**
+ * Registracijos pokalbiui formos tekstai (14 kryptis). Laukai atitinka lib/forms/intro-call.ts.
+ * TODO: kai forma bus prijungta prie el. pašto, „preview*“ tekstus pakeisti tikru patvirtinimu.
+ */
+export const introForm = {
+  title: "Registracija pokalbiui",
+  name: "Vardas",
+  email: "El. paštas",
+  topic: "Jūsų situacija",
+  topicPlaceholder: "Pasirinkite (neprivaloma)",
+  topicOther: "Kita / dar nežinau",
+  message: "Žinutė",
+  optional: "neprivaloma",
+  messageHint: "Nenurodykite asmens kodo, sąskaitų numerių ar kitų jautrių duomenų.",
+  privacy: "Sutinku, kad mano duomenys būtų naudojami tik atsakant į šią užklausą.",
+  privacyLink: "Privatumo politika",
+  submit: "Susitarti dėl pokalbio",
+  pending: "Siunčiama…",
+  previewTitle: "Ačiū!",
+  previewBody: "Tai dizaino peržiūra: forma dar neprijungta, todėl duomenys niekur neišsiųsti ir neišsaugoti.",
+  again: "Užpildyti iš naujo",
+  alt: "Arba parašykite Instagram",
+};
+
 export const about = {
   title: "Apie mane",
   paragraphs: [
@@ -168,6 +192,33 @@ export const about = {
     { title: "Diversifikacija", body: "Rizika paskirstoma tarp turto klasių, regionų ir sektorių." },
     { title: "Nepriklausomumas", body: "Nesu susietas su viena platforma – lyginame skirtingų bankų ir brokerių sprendimus bei įkainius." },
   ],
+};
+
+type ProfileStory = { title: string; paragraphs: string[]; points?: { title: string; body: string }[] };
+
+/**
+ * „Plačiau apie mane“ panelė (14 kryptis) – konsultanto „faktų lapas“.
+ * Tekstai paimti iš `about` ir `aum` – čia tik jų išdėstymas blokais.
+ */
+export const profileSheet = {
+  open: "Plačiau apie mane",
+  openHint: "Faktų lapas: patirtis, licencija, principai",
+  kicker: "Konsultanto faktų lapas",
+  close: "Uždaryti",
+  notesLabel: "Investavimo užrašai",
+  facts: [
+    { label: "Valdomos investicijos", value: `${aum.thousands}${aum.suffix}` },
+    { label: "Patirtis", value: "5+ metai investavimo srityje" },
+    { label: "Išsilavinimas", value: "Ekonomikos studijos" },
+    { label: "Licencija", value: "BFAA investavimo konsultanto (IA)" },
+    { label: "Nepriklausomumas", value: "Nesusietas su viena investavimo platforma" },
+    { label: "Padedu", value: "Pradedantiems ir jau investuojantiems, tėvams, įmonėms" },
+  ],
+  story: [
+    { title: "Kodėl pradėjau", paragraphs: about.paragraphs.slice(0, 3) },
+    { title: "Kaip dirbu", paragraphs: [about.paragraphs[6]], points: about.principles.slice(0, 2) },
+    { title: "Kuo skiriuosi", paragraphs: [about.paragraphs[7]] },
+  ] as ProfileStory[],
 };
 
 export const situationPicker = {

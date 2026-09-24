@@ -1,0 +1,229 @@
+/* Šviesi formos kortelė – dedama ant tamsaus fono. */
+.root {
+  --f-fg: #1d1e28;
+  --f-muted: #5d5f73;
+  --f-line: color-mix(in srgb, var(--brand-ink) 24%, transparent);
+  --f-ink: var(--brand-ink);
+  --f-dark: #14151c;
+  --f-error: #a3261e;
+  --f-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border-radius: 6px;
+  background: #fbf9f7;
+  color: var(--f-fg);
+  text-align: left;
+  box-shadow: 0 40px 90px -50px rgb(0 0 0 / 0.7);
+}
+/* tamsios sekcijos kreminis fokuso žiedas šviesioje kortelėje nesimatytų */
+.root a:focus-visible,
+.root button:focus-visible,
+.root input:focus-visible {
+  outline-color: var(--f-ink);
+}
+
+.form {
+  display: grid;
+  gap: 1.1rem;
+}
+.title {
+  margin-bottom: 0.35rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--f-ink);
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+.field label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.optional {
+  font-weight: 400;
+  color: var(--f-muted);
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 3.1rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--f-line);
+  border-radius: 4px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: 1rem; /* ne mažiau 16 px – iOS nepriartina */
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.field textarea {
+  min-height: 5.75rem;
+  resize: vertical;
+}
+.field select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%234a4e69' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  cursor: pointer;
+}
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: color-mix(in srgb, var(--f-ink) 45%, transparent);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--f-ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--f-ink) 16%, transparent);
+}
+.field [aria-invalid="true"],
+.check [aria-invalid="true"] {
+  border-color: var(--f-error);
+}
+.hint {
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--f-muted);
+}
+.error {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--f-error);
+  animation: errIn 0.35s var(--f-ease);
+}
+@keyframes errIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+.check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.7rem;
+  align-items: start;
+  margin-top: 0.15rem;
+}
+.check input {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--f-ink);
+  cursor: pointer;
+}
+.check input[aria-invalid="true"] {
+  outline: 1px solid var(--f-error);
+  outline-offset: 2px;
+}
+.check label {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--f-muted);
+  cursor: pointer;
+}
+.check label a {
+  color: var(--f-fg);
+}
+.check .error {
+  grid-column: 2;
+}
+
+/* laukas botams: paslėptas ne display:none, kad jį „matytų“ automatinės formos pildyklės */
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.4rem;
+  margin-top: 0.35rem;
+  padding: 0 1.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--f-dark);
+  color: var(--brand-cream);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s var(--f-ease), opacity 0.3s;
+}
+.submit:hover {
+  background: var(--f-ink);
+}
+.submit:active {
+  transform: scale(0.985);
+}
+.submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+.submitArrow {
+  transition: transform 0.45s var(--f-ease);
+}
+.submit:hover .submitArrow {
+  transform: translateX(5px);
+}
+
+/* patvirtinimas */
+.done {
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  outline: none;
+  animation: errIn 0.6s var(--f-ease);
+}
+.doneIcon {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.4rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--f-ink);
+}
+.doneIcon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 0.55rem;
+  height: 1rem;
+  border: solid var(--f-ink);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.doneTitle {
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+.doneBody {
+  max-width: 26rem;
+  font-size: 0.9375rem;
+  color: var(--f-muted);
+}
+.again {
+  margin-top: 0.5rem;
+  padding: 0 0 0.2rem;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+}

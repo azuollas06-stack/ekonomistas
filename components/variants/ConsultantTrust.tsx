@@ -6,9 +6,11 @@ import {
   hero,
   aum,
   servicesIntro,
+  situationPicker,
   services,
   process,
   introCall,
+  introForm,
   about,
   calculator,
   faq,
@@ -24,6 +26,9 @@ import ConsentButton from "@/components/shared/ConsentButton";
 import DesignSwitcher from "@/components/shared/DesignSwitcher";
 import CountUp from "@/components/fx/CountUp";
 import ScrollHeader from "@/components/fx/ScrollHeader";
+import ProfileSheet from "@/components/fx/ProfileSheet";
+import IntroForm from "@/components/fx/IntroForm";
+import StickyCta from "@/components/fx/StickyCta";
 import s from "./ConsultantTrust.module.css";
 
 const TRUST = [
@@ -113,7 +118,7 @@ export default function ConsultantTrust({ current }: { current: number }) {
                 </a>
               </div>
               <p className={`${s.assure} ${s.in}`} style={delay(6, 120)}>
-                {introCall.note} Pokalbis nemokamas.
+                {introCall.note}
               </p>
             </div>
 
@@ -149,21 +154,25 @@ export default function ConsultantTrust({ current }: { current: number }) {
             <div>
               <p className={s.eyebrow}>Paslaugos</p>
               <h2 id="services-title" className={s.h2} data-reveal>
-                {servicesIntro.title}
+                {situationPicker.title}
               </h2>
             </div>
             <p className={s.lead} data-reveal>
-              Sprendimai pritaikyti jums, o ne vienodi visiems.
+              {situationPicker.lead}
             </p>
           </div>
           <ul role="list" className={s.services}>
             {services.map((svc, i) => (
               <li key={svc.id} data-reveal style={delay(i)}>
-                <a href={svc.href} className={s.service}>
+                {/* data-topic: formoje iš karto parenkama ši situacija */}
+                <a href={svc.href} className={s.service} data-topic={svc.situation}>
                   <span className={s.serviceN} aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className={s.serviceTitle}>{svc.title}</span>
+                  <span className={s.serviceMain}>
+                    <span className={s.serviceSituation}>„{svc.situation}“</span>
+                    <span className={s.serviceTitle}>{svc.title}</span>
+                  </span>
                   <span className={s.serviceText}>{svc.short}</span>
                   <span className={s.serviceGo} aria-hidden="true">
                     →
@@ -209,19 +218,10 @@ export default function ConsultantTrust({ current }: { current: number }) {
                 <p>„{about.pullQuote}“</p>
                 <footer>— {brand.name}</footer>
               </blockquote>
-              <dl className={s.creds}>
-                {[
-                  ["Patirtis", "5+ metai investavimo srityje"],
-                  ["Išsilavinimas", "Ekonomikos studijos"],
-                  ["Licencija", "BFAA investavimo konsultanto (IA)"],
-                  ["Principai", "Ilgalaikis investavimas ir diversifikacija"],
-                ].map(([k, v], i) => (
-                  <div key={k} data-reveal style={delay(i)}>
-                    <dt>{k}</dt>
-                    <dd>{v}</dd>
-                  </div>
-                ))}
-              </dl>
+              {/* kliento idėja: trumpai puslapyje, visa informacija – „faktų lape“ */}
+              <div data-reveal>
+                <ProfileSheet />
+              </div>
             </div>
           </div>
         </section>
@@ -298,27 +298,33 @@ export default function ConsultantTrust({ current }: { current: number }) {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* KONTAKTAI: registracija pokalbiui */}
         <section id="kontaktai" className={s.final} aria-labelledby="final-title">
           <div className={s.finalInner}>
-            <p className={s.eyebrowLight}>{introCall.eyebrow}</p>
-            <h2 id="final-title" className={s.finalTitle} data-reveal>
-              {finalCta.title}
-            </h2>
-            <p className={s.finalBody} data-reveal>
-              {finalCta.body}
-            </p>
-            <div className={s.actions} data-reveal>
-              <a href={cta.href} className={s.btnLight}>
-                {cta.introUpper}
-                <Arrow />
-              </a>
+            <div className={s.finalText}>
+              <p className={s.eyebrowLight}>{introCall.eyebrow}</p>
+              <h2 id="final-title" className={s.finalTitle} data-reveal>
+                {finalCta.title}
+              </h2>
+              <p className={s.finalBody} data-reveal>
+                {finalCta.body}
+              </p>
+              <ul role="list" className={s.finalPoints} data-reveal>
+                <li>Nemokamai</li>
+                <li>{introCall.note.replace(".", "")}</li>
+                <li>Nepriklausomai</li>
+              </ul>
+              <p className={s.finalAlt} data-reveal>
+                {introForm.alt}{" "}
+                <a href={brand.instagram.url} target="_blank" rel="noopener noreferrer">
+                  {brand.instagram.handle}
+                  <span className="sr-only"> (atsidaro naujame lange)</span>
+                </a>
+              </p>
             </div>
-            <ul role="list" className={s.finalPoints} data-reveal>
-              <li>Nemokamai</li>
-              <li>{introCall.note.replace(".", "")}</li>
-              <li>Nepriklausomai</li>
-            </ul>
+            <div data-reveal>
+              <IntroForm />
+            </div>
           </div>
         </section>
       </main>
@@ -354,7 +360,15 @@ export default function ConsultantTrust({ current }: { current: number }) {
         </div>
       </footer>
 
-      <DesignSwitcher current={current} />
+      {/* telefone: atsiranda praslinkus hero, pasislepia prie formos */}
+      <StickyCta className={s.sticky}>
+        <a href={cta.href} className={s.stickyBtn}>
+          {cta.intro}
+          <Arrow />
+        </a>
+      </StickyCta>
+
+      <DesignSwitcher current={current} className={s.switcher} />
     </div>
   );
 }
