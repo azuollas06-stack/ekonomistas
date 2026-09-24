@@ -48,6 +48,17 @@ export const credentials = [
   { key: "licencija", value: "BFAA", short: "investavimo konsultanto (IA) licencija", label: "BFAA investavimo konsultanto (IA) licencija" },
 ] as const;
 
+/**
+ * Valdomų klientų investicijų apimtis (14 kryptis).
+ * TODO: prieš publikuojant patvirtinti su klientu tikslią sumą ir formuluotę.
+ */
+export const aum = {
+  /** tūkstančiais eurų – skaičiaus animacijai */
+  thousands: 200,
+  suffix: " 000 €+",
+  label: "valdomų klientų investicijų",
+};
+
 export const problem = {
   title: "Norite investuoti, bet nežinote, nuo ko pradėti?",
   body: "Galbūt apie investavimą galvojate jau kurį laiką, tačiau vis atidėliojate, nes trūksta žinių, kyla per daug klausimų arba tiesiog nežinote, koks sprendimas būtų tinkamas būtent jums.",

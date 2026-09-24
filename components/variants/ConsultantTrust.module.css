@@ -1,0 +1,1010 @@
+/*
+ * 14 kryptis – patikimumo versija.
+ * Mažiau teksto, aiškūs faktai (valdomos investicijos, licencija, patirtis),
+ * tik ramios animacijos: eilučių atsiradimas, skaičių prasisukimas, linijų piešimas.
+ * Mobile-first.
+ */
+.page {
+  --bg: #f6f3f0;
+  --surface: #ffffff;
+  --fg: #1d1e28;
+  --muted: #5d5f73;
+  --line: color-mix(in srgb, var(--brand-ink) 14%, transparent);
+  --ink: var(--brand-ink);
+  --dark: #14151c;
+  --cream: var(--brand-cream);
+  --accent: var(--brand-ink);
+  --on-accent: #fff;
+  --g: 1.25rem;
+  --max: 1240px;
+  --header-h: 4.25rem;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 1.0625rem;
+  overflow-x: clip;
+}
+@media (min-width: 960px) {
+  .page {
+    --g: 3rem;
+    --header-h: 4.75rem;
+  }
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  color: var(--cream);
+}
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--dark) 92%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--cream) 9%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.header[data-scrolled="true"]::before {
+  opacity: 1;
+}
+.header :focus-visible {
+  outline-color: var(--cream);
+}
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: var(--max);
+  height: var(--header-h);
+  margin: 0 auto;
+  padding: 0 var(--g);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-right: auto;
+  text-decoration: none;
+}
+.mark {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid color-mix(in srgb, var(--cream) 38%, transparent);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.3s, color 0.3s;
+}
+.brand:hover .mark {
+  background: var(--cream);
+  color: var(--dark);
+}
+.brandName {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--cream);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  opacity: 0.6;
+}
+
+/* ---------- BENDRA ---------- */
+.section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(5rem, 12vw, 9rem) var(--g) 0;
+}
+.eyebrow,
+.eyebrowLight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.eyebrow::before,
+.eyebrowLight::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+}
+.eyebrowLight {
+  justify-content: center;
+  color: color-mix(in srgb, var(--cream) 70%, transparent);
+}
+.h2 {
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  line-height: 1.06;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  max-width: 16ch;
+}
+.lead {
+  max-width: 26rem;
+  color: var(--muted);
+  font-size: 1.0625rem;
+}
+.head {
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+.headRow {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+@media (min-width: 960px) {
+  .headRow {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+}
+.arrow {
+  display: inline-block;
+  transition: transform 0.45s var(--ease-soft);
+}
+a:hover > .arrow,
+a:focus-visible > .arrow {
+  transform: translateX(5px);
+}
+.btnLight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.4rem;
+  padding: 0 1.6rem;
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--dark);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s var(--ease-soft);
+}
+.btnLight:hover {
+  background: #fff;
+}
+.btnLight:active {
+  transform: scale(0.98);
+}
+.linkLight {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  min-height: 3.4rem;
+  padding: 0 0.25rem;
+  color: color-mix(in srgb, var(--cream) 82%, transparent);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.linkLight::after {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  right: 0.25rem;
+  bottom: 1rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+  transform-origin: left;
+  transition: opacity 0.3s, transform 0.5s var(--ease-soft);
+}
+.linkLight:hover {
+  color: var(--cream);
+}
+.linkLight:hover::after {
+  opacity: 1;
+}
+.actions {
+  display: grid;
+  gap: 0.5rem;
+}
+@media (min-width: 560px) {
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.75rem;
+  }
+}
+
+/* ---------- ATSIRADIMO ANIMACIJOS (hero) ---------- */
+.line {
+  display: block;
+  overflow: hidden;
+  /* vieta raidžių „g“, „j“ uodegoms */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.line > * {
+  display: inline-block;
+  font-style: normal;
+  animation: rise 1.1s var(--ease-soft) both;
+  animation-delay: calc(0.1s + var(--d, 0s));
+}
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+.in {
+  animation: fadeUp 1s var(--ease-soft) both;
+  animation-delay: calc(0.1s + var(--d, 0s));
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  padding-top: calc(var(--header-h) + 2.5rem);
+  background:
+    radial-gradient(90% 60% at 85% 10%, color-mix(in srgb, var(--brand-ink) 30%, transparent), transparent 70%),
+    var(--dark);
+  color: var(--cream);
+}
+.hero :focus-visible {
+  outline-color: var(--cream);
+}
+.heroGrid {
+  display: grid;
+  gap: 3rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--g);
+}
+@media (min-width: 960px) {
+  .hero {
+    padding-top: calc(var(--header-h) + 3rem);
+  }
+  .heroGrid {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: clamp(3rem, 6vw, 6rem);
+    min-height: calc(100svh - var(--header-h) - 14rem);
+  }
+}
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--cream) 70%, transparent);
+}
+/* mažas „antspaudas“ – apskritimas su varnele */
+.seal {
+  position: relative;
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 1px solid color-mix(in srgb, var(--cream) 45%, transparent);
+  border-radius: 50%;
+}
+.seal::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 0.3rem;
+  height: 0.55rem;
+  border: solid var(--cream);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.heroTitle {
+  font-size: clamp(3rem, 11vw, 6rem);
+  line-height: 0.98;
+  font-weight: 300;
+  letter-spacing: -0.045em;
+}
+.heroTitle em {
+  color: color-mix(in srgb, var(--cream) 62%, transparent);
+}
+.heroLead {
+  max-width: 30rem;
+  margin: 1.75rem 0 2.25rem;
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--cream) 78%, transparent);
+}
+.assure {
+  margin-top: 1.25rem;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--cream) 50%, transparent);
+}
+
+.heroMedia {
+  position: relative;
+  justify-self: stretch;
+}
+@media (min-width: 960px) {
+  .heroMedia {
+    justify-self: end;
+    width: 100%;
+    max-width: 30rem;
+  }
+}
+.heroPhoto {
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  border-radius: 4px;
+  background: #1c1d25;
+  animation: settle 2.2s var(--ease-soft) both;
+}
+.heroPhoto img {
+  animation: zoom 3.2s var(--ease-soft) both;
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes zoom {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* valdomų investicijų kortelė ant nuotraukos */
+.statCard {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "value spark"
+    "label spark";
+  align-items: center;
+  gap: 0.2rem 1rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--dark) 72%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cream) 14%, transparent);
+  animation: fadeUp 1.1s var(--ease-soft) both;
+  animation-delay: 0.9s;
+}
+@media (min-width: 960px) {
+  .statCard {
+    left: -3rem;
+    right: auto;
+    bottom: 2.5rem;
+    min-width: 19rem;
+    padding: 1.35rem 1.5rem;
+  }
+}
+.statValue {
+  grid-area: value;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.statLabel {
+  grid-area: label;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--cream) 68%, transparent);
+}
+.spark {
+  grid-area: spark;
+  width: 4.5rem;
+  height: 2.25rem;
+  overflow: visible;
+}
+.spark path {
+  fill: none;
+  stroke: var(--cream);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.8s var(--ease) forwards;
+  animation-delay: 1.3s;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.live {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8fd3a6;
+}
+.live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: ping 2.6s var(--ease) infinite;
+}
+@keyframes ping {
+  to {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* pasitikėjimo juosta */
+.trust {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: var(--max);
+  margin: clamp(3.5rem, 7vw, 5rem) auto 0;
+  padding: 0 var(--g);
+}
+.trust li {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  padding: 1.5rem 0 1.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+}
+.trust li:nth-child(even) {
+  padding-left: 1.25rem;
+  border-left: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+}
+@media (min-width: 960px) {
+  .trust {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .trust li {
+    padding: 2rem 1.5rem 2.5rem;
+  }
+  .trust li:first-child {
+    padding-left: 0;
+  }
+  .trust li + li {
+    border-left: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+  }
+}
+.trustValue {
+  font-size: clamp(1.25rem, 2.3vw, 1.875rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.trustLabel {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--cream) 55%, transparent);
+}
+
+/* ---------- PASLAUGOS: ramus sąrašas ---------- */
+.services {
+  border-top: 1px solid var(--line);
+}
+.services li {
+  border-bottom: 1px solid var(--line);
+}
+.service {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  gap: 0.35rem 1rem;
+  align-items: baseline;
+  padding: 1.75rem 0;
+  text-decoration: none;
+  isolation: isolate;
+}
+.service::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(var(--g) * -0.5);
+  z-index: -1;
+  border-radius: 4px;
+  background: var(--surface);
+  opacity: 0;
+  transform: scaleY(0.85);
+  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease-soft);
+}
+.service:hover::before,
+.service:focus-visible::before {
+  opacity: 1;
+  transform: none;
+}
+.serviceN {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.serviceTitle {
+  font-size: clamp(1.25rem, 2.4vw, 1.625rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.serviceText {
+  grid-column: 2 / 3;
+  max-width: 34rem;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+.serviceGo {
+  grid-column: 3;
+  grid-row: 1;
+  color: var(--ink);
+  transition: transform 0.45s var(--ease-soft);
+}
+.service:hover .serviceGo {
+  transform: translateX(6px);
+}
+@media (min-width: 960px) {
+  .service {
+    grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.1fr) 2rem;
+    align-items: center;
+    padding: 2.1rem 0;
+  }
+  .serviceText {
+    grid-column: 3;
+  }
+  .serviceGo {
+    grid-column: 4;
+    justify-self: end;
+  }
+}
+
+/* ---------- PROCESAS: laiko juosta, linija nusipiešia ---------- */
+.steps {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  padding-left: 1.75rem;
+}
+.steps::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: var(--ink);
+  opacity: 0.35;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.6s var(--ease);
+}
+.steps:global(.is-visible)::before {
+  transform: none;
+}
+.steps li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+}
+.stepDot {
+  position: absolute;
+  left: calc(-1.75rem + 0.5px);
+  top: 0.35rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+.stepN {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.stepTitle {
+  font-size: 1.1875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.stepText {
+  max-width: 22rem;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+/* elementai atsiranda vienas po kito, kai matoma visa juosta */
+:global(html.reveal-ready) .steps li {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s var(--ease-soft), transform 0.8s var(--ease-soft);
+  transition-delay: calc(0.25s + var(--d, 0s));
+}
+:global(html.reveal-ready) .steps:global(.is-visible) li {
+  opacity: 1;
+  transform: none;
+}
+/* pati juosta nejuda – juda jos elementai */
+:global(html.reveal-ready) .steps[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+@media (min-width: 960px) {
+  .steps {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    padding: 2.25rem 0 0;
+  }
+  .steps::before {
+    left: 0;
+    right: 0;
+    top: 4px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .stepDot {
+    left: 0;
+    top: calc(-2.25rem - 0.5px);
+  }
+}
+
+/* ---------- APIE ---------- */
+.about {
+  display: grid;
+  gap: 2.5rem;
+}
+@media (min-width: 960px) {
+  .about {
+    grid-template-columns: 0.85fr 1fr;
+    gap: clamp(3rem, 7vw, 7rem);
+    align-items: center;
+  }
+}
+.aboutPhoto {
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  border-radius: 4px;
+}
+.pull {
+  margin: 2rem 0 2.5rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--ink);
+}
+.pull p {
+  font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+.pull footer {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.creds {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.creds div {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 1rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9375rem;
+}
+.creds dt {
+  color: var(--muted);
+}
+.creds dd {
+  margin: 0;
+}
+
+/* ---------- ATSILIEPIMAI ---------- */
+.sampleNote {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.badge {
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.reviews {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 960px) {
+  .reviews {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+.reviews figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  height: 100%;
+  margin: 0;
+  padding: 1.75rem;
+  border-radius: 4px;
+  background: var(--surface);
+  box-shadow: 0 1px 0 var(--line);
+  transition: transform 0.5s var(--ease-soft), box-shadow 0.5s var(--ease-soft);
+}
+.reviews figure:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -24px rgb(29 30 40 / 0.25);
+}
+.reviews blockquote {
+  margin: 0;
+}
+.reviews blockquote p {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+.reviews blockquote p::before {
+  content: "“";
+  display: block;
+  height: 1.6rem;
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.5;
+}
+.reviews figcaption {
+  display: grid;
+  gap: 0.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+}
+.reviews figcaption span {
+  color: var(--muted);
+}
+
+/* ---------- DUK ---------- */
+.faq {
+  display: grid;
+  gap: 2rem;
+}
+@media (min-width: 960px) {
+  .faq {
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 4rem;
+  }
+}
+.faqList {
+  border-top: 1px solid var(--line);
+}
+.faqItem {
+  border-bottom: 1px solid var(--line);
+}
+.faqItem summary {
+  position: relative;
+  display: block;
+  padding: 1.35rem 2.5rem 1.35rem 0;
+  font-size: 1.0625rem;
+  cursor: pointer;
+  list-style: none;
+}
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+.faqItem summary::before,
+.faqItem summary::after {
+  content: "";
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  width: 0.8rem;
+  height: 1px;
+  background: currentColor;
+  transition: transform 0.4s var(--ease-soft);
+}
+.faqItem summary::after {
+  transform: rotate(90deg);
+}
+.faqItem[open] summary::after {
+  transform: rotate(0deg);
+}
+.faqAnswer {
+  padding: 0 2.5rem 1.5rem 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  animation: fadeUp 0.6s var(--ease-soft);
+}
+
+/* ---------- CTA ---------- */
+.final {
+  margin-top: clamp(5rem, 12vw, 9rem);
+  padding: clamp(5rem, 12vw, 8.5rem) var(--g);
+  background:
+    radial-gradient(70% 80% at 50% 0%, color-mix(in srgb, var(--brand-ink) 32%, transparent), transparent 70%),
+    var(--dark);
+  color: var(--cream);
+  text-align: center;
+}
+.final :focus-visible {
+  outline-color: var(--cream);
+}
+.finalInner {
+  display: grid;
+  justify-items: center;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+.finalTitle {
+  font-size: clamp(2.25rem, 7vw, 4rem);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+.finalBody {
+  max-width: 28rem;
+  margin: 1.25rem 0 2.25rem;
+  color: color-mix(in srgb, var(--cream) 70%, transparent);
+}
+.final .actions {
+  justify-content: center;
+}
+.finalPoints {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 2rem;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--cream) 55%, transparent);
+}
+.finalPoints li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.finalPoints li::before {
+  content: "";
+  width: 0.35rem;
+  height: 0.6rem;
+  margin-top: -0.2rem;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  padding: 3rem 0 5.5rem;
+  background: var(--dark);
+  color: color-mix(in srgb, var(--cream) 60%, transparent);
+  font-size: 0.875rem;
+}
+.footer :focus-visible {
+  outline-color: var(--cream);
+}
+.footerInner,
+.footerBottom {
+  display: grid;
+  gap: 1.5rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-inline: var(--g);
+}
+.footerInner {
+  padding-top: 2.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--cream) 10%, transparent);
+}
+@media (min-width: 960px) {
+  .footerInner {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+  }
+  .footerBottom {
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+  }
+}
+.footerName {
+  color: var(--cream);
+  font-weight: 500;
+}
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+}
+.footerLinks a,
+.linkButton {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s;
+}
+.footerLinks a:hover,
+.linkButton:hover {
+  color: var(--cream);
+}
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: inherit;
+  cursor: pointer;
+}
+.footerBottom {
+  margin-top: 2.5rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--cream) 42%, transparent);
+}
+.footerBottom p:first-child {
+  max-width: 44rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark path {
+    stroke-dashoffset: 0;
+  }
+  .steps::before {
+    transform: none;
+  }
+}
