@@ -9,6 +9,8 @@
 export const brand = {
   name: "Marius Lencevičius",
   firstName: "Marius",
+  /** Svetainės pavadinimas antraštėje (11 kryptis) – kaip Instagram paskyra */
+  siteName: "Ekonomisto užrašai",
   role: "Nepriklausomas investavimo konsultantas",
   tagline: "Investuoti gali kiekvienas.",
   instagram: {
@@ -151,17 +153,19 @@ export const introCall = {
 };
 
 /**
- * Registracijos pokalbiui formos tekstai (14 kryptis). Laukai atitinka lib/forms/intro-call.ts.
+ * Registracijos pokalbiui formos tekstai (11 ir 14 kryptys). Laukai atitinka lib/forms/intro-call.ts.
  * TODO: kai forma bus prijungta prie el. pašto, „preview*“ tekstus pakeisti tikru patvirtinimu.
  */
 export const introForm = {
   title: "Registracija pokalbiui",
-  name: "Vardas",
+  name: "Vardas, pavardė",
+  phone: "Telefono numeris",
+  phonePlaceholder: "+370 600 00000",
   email: "El. paštas",
   topic: "Jūsų situacija",
   topicPlaceholder: "Pasirinkite (neprivaloma)",
   topicOther: "Kita / dar nežinau",
-  message: "Žinutė",
+  message: "Trumpai aprašykite situaciją",
   optional: "neprivaloma",
   messageHint: "Nenurodykite asmens kodo, sąskaitų numerių ar kitų jautrių duomenų.",
   privacy: "Sutinku, kad mano duomenys būtų naudojami tik atsakant į šią užklausą.",
@@ -376,6 +380,15 @@ export const calculator = {
     "Skaičiavimas iliustracinis. Hipotetinė grąža nėra prognozė ar pažadas – realūs rezultatai gali skirtis, o investicijų vertė gali ir kristi.",
   defaults: { initial: 1000, monthly: 100, years: 15, rate: 5 },
   link: "Atidaryti skaičiuoklę",
+  question: "Kiek galėtų sukaupti reguliarumas?",
+  // Kliento pageidavimu: grąža iki 25 %, paprastesni pavadinimai (įspėjimas lieka nepakeistas).
+  rateLabel: "Metinė grąža",
+  rateMax: 25,
+  paidLabel: "Investuota",
+  paidLegend: "Investuota suma",
+  growthLabel: "Uždirbta",
+  ctaLead: "Norite aptarti savo situaciją?",
+  close: "Uždaryti",
 };
 
 export const notes = {

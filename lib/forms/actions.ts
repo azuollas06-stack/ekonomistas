@@ -18,6 +18,7 @@ export async function submitIntroCall(_prev: IntroCallState, formData: FormData)
 
   const result = validateIntroCall({
     name: formData.get("name"),
+    phone: formData.get("phone"),
     email: formData.get("email"),
     topic: formData.get("topic"),
     message: formData.get("message"),

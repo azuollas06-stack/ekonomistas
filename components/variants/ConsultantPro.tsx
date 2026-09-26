@@ -5,14 +5,13 @@ import {
   cta,
   hero,
   problem,
-  situationPicker,
+  guidedPath,
   servicesIntro,
   services,
   process,
   introCall,
+  introForm,
   about,
-  xray,
-  calculator,
   notes,
   faq,
   finalCta,
@@ -22,13 +21,13 @@ import {
 } from "@/content/site";
 import Photo from "@/components/shared/Photo";
 import MobileNav from "@/components/shared/MobileNav";
-import SituationPicker from "@/components/shared/SituationPicker";
-import PortfolioXray from "@/components/shared/PortfolioXray";
-import CalculatorTeaser from "@/components/shared/CalculatorTeaser";
 import ConsentButton from "@/components/shared/ConsentButton";
 import DesignSwitcher from "@/components/shared/DesignSwitcher";
 import CountUp from "@/components/fx/CountUp";
 import ScrollHeader from "@/components/fx/ScrollHeader";
+import GuidedPath from "@/components/fx/GuidedPath";
+import IntroForm from "@/components/fx/IntroForm";
+import CalculatorSheet from "@/components/fx/CalculatorSheet";
 import s from "./ConsultantPro.module.css";
 
 // Kompetencijos – tik kliento pateikti teiginiai.
@@ -50,7 +49,11 @@ function Arrow() {
   );
 }
 
-/** 11 kryptis: 03 struktūra + 05 hero, švaresnė ir su daugiau subtilių animacijų. */
+/**
+ * 11 kryptis (kliento pasirinkta): 03 struktūra + 05 hero, švaresnė ir su subtiliomis animacijomis.
+ * Kliento pakeitimai: „Ekonomisto užrašai“ antraštėje, 3 klausimų kelias (iš 13), registracijos forma
+ * (kaip 14), skaičiuoklė tik iš meniu, be portfelio peržiūros.
+ */
 export default function ConsultantPro({ current }: { current: number }) {
   const reviews = testimonials.length > 0 ? testimonials : sampleTestimonials;
   const isSample = testimonials.length === 0;
@@ -64,10 +67,7 @@ export default function ConsultantPro({ current }: { current: number }) {
       <ScrollHeader className={s.header} progressClassName={s.progress}>
         <div className={s.headerInner}>
           <a href="#pagrindinis" className={s.brand}>
-            <span className={s.mark} aria-hidden="true">
-              ML
-            </span>
-            <span className={s.brandName}>{brand.name}</span>
+            {brand.siteName}
           </a>
           <nav aria-label="Pagrindinė navigacija" className={s.nav}>
             <ul role="list">
@@ -145,19 +145,21 @@ export default function ConsultantPro({ current }: { current: number }) {
           </div>
         </section>
 
-        {/* KUR ESATE ŠIANDIEN? */}
-        <section className={s.section} aria-labelledby="picker-title">
-          <div className={s.head}>
-            <p className={s.eyebrow}>Jūsų situacija</p>
-            <h2 id="picker-title" className={s.h2} data-reveal>
-              {situationPicker.title}
-            </h2>
-            <p className={s.lead} data-reveal>
-              {situationPicker.lead}
-            </p>
-          </div>
-          <div data-reveal>
-            <SituationPicker services={services} moreLabel={cta.more} layout="list" className={s.picker} />
+        {/* 3 KLAUSIMŲ KELIAS (iš 13 krypties) */}
+        <section className={s.section} aria-labelledby="path-title">
+          <div className={s.toolRow}>
+            <div className={s.toolText}>
+              <p className={s.eyebrow}>Trys klausimai</p>
+              <h2 id="path-title" className={s.h2} data-reveal>
+                {guidedPath.title}
+              </h2>
+              <p className={s.muted} data-reveal>
+                {guidedPath.lead}
+              </p>
+            </div>
+            <div data-reveal>
+              <GuidedPath />
+            </div>
           </div>
         </section>
 
@@ -317,40 +319,6 @@ export default function ConsultantPro({ current }: { current: number }) {
           </ul>
         </section>
 
-        {/* PORTFELIO PERŽIŪRA */}
-        <section className={s.section} aria-labelledby="xray-title">
-          <div className={s.toolRow}>
-            <div className={s.toolText}>
-              <p className={s.eyebrow}>Portfelio peržiūra</p>
-              <h2 id="xray-title" className={s.h2} data-reveal>
-                {xray.title}
-              </h2>
-              <p className={s.muted} data-reveal>
-                {xray.lead}
-              </p>
-            </div>
-            <div data-reveal>
-              <PortfolioXray className={s.panel} />
-            </div>
-          </div>
-        </section>
-
-        {/* SKAIČIUOKLĖ */}
-        <section id="skaiciuokle" className={s.section} aria-labelledby="calc-title">
-          <div className={s.head}>
-            <p className={s.eyebrow}>{calculator.title}</p>
-            <h2 id="calc-title" className={s.h2} data-reveal>
-              Kiek galėtų sukaupti reguliarumas?
-            </h2>
-            <p className={s.lead} data-reveal>
-              {calculator.lead}
-            </p>
-          </div>
-          <div className={s.calc} data-reveal>
-            <CalculatorTeaser />
-          </div>
-        </section>
-
         {/* UŽRAŠAI */}
         <section className={s.section} aria-labelledby="notes-title">
           <div className={s.headRow}>
@@ -399,23 +367,32 @@ export default function ConsultantPro({ current }: { current: number }) {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* KONTAKTAI: registracija pokalbiui (kaip 14 kryptyje) */}
         <section id="kontaktai" className={s.final} aria-labelledby="final-title">
           <div className={s.finalInner}>
-            <h2 id="final-title" className={s.finalTitle} data-reveal>
-              {finalCta.title}
-            </h2>
-            <p className={s.finalBody} data-reveal>
-              {finalCta.body}
-            </p>
-            <div className={s.actions} data-reveal>
-              <a href={cta.href} className={s.btnLight}>
-                {cta.intro}
-                <Arrow />
-              </a>
-              <a href={cta.href} className={s.btnGhostLight}>
-                {cta.primary}
-              </a>
+            <div className={s.finalText}>
+              <p className={s.eyebrowLight}>{introCall.eyebrow}</p>
+              <h2 id="final-title" className={s.finalTitle} data-reveal>
+                {finalCta.title}
+              </h2>
+              <p className={s.finalBody} data-reveal>
+                {finalCta.body}
+              </p>
+              <ul role="list" className={s.finalPoints} data-reveal>
+                <li>Nemokamai</li>
+                <li>{introCall.note.replace(".", "")}</li>
+                <li>Nepriklausomai</li>
+              </ul>
+              <p className={s.finalAlt} data-reveal>
+                {introForm.alt}{" "}
+                <a href={brand.instagram.url} target="_blank" rel="noopener noreferrer">
+                  {brand.instagram.handle}
+                  <span className="sr-only"> (atsidaro naujame lange)</span>
+                </a>
+              </p>
+            </div>
+            <div data-reveal>
+              <IntroForm />
             </div>
           </div>
         </section>
@@ -450,6 +427,9 @@ export default function ConsultantPro({ current }: { current: number }) {
           </p>
         </div>
       </footer>
+
+      {/* skaičiuoklė puslapyje nerodoma – atsidaro tik paspaudus „Skaičiuoklė“ meniu */}
+      <CalculatorSheet />
 
       <DesignSwitcher current={current} />
     </div>

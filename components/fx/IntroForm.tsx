@@ -10,13 +10,21 @@ type Key = keyof FieldErrors;
 
 const INITIAL: IntroCallState = { status: "idle" };
 /** formos lauko vardas ↔ klaidos raktas */
-const FIELD: Record<Key, string> = { name: "name", email: "email", topic: "topic", message: "message", privacyAccepted: "privacy" };
-const KEY: Record<string, Key> = { name: "name", email: "email", topic: "topic", message: "message", privacy: "privacyAccepted" };
+const FIELD: Record<Key, string> = {
+  name: "name",
+  phone: "phone",
+  email: "email",
+  topic: "topic",
+  message: "message",
+  privacyAccepted: "privacy",
+};
+const KEY: Record<string, Key> = { name: "name", phone: "phone", email: "email", topic: "topic", message: "message", privacy: "privacyAccepted" };
 
 function validate(form: HTMLFormElement) {
   const fd = new FormData(form);
   return validateIntroCall({
     name: fd.get("name"),
+    phone: fd.get("phone"),
     email: fd.get("email"),
     topic: fd.get("topic"),
     message: fd.get("message"),
@@ -123,6 +131,23 @@ export default function IntroForm() {
               aria-describedby={described("name")}
             />
             {error("name")}
+          </div>
+
+          <div className={s.field}>
+            <label htmlFor={fieldId("phone")}>{t.phone}</label>
+            <input
+              id={fieldId("phone")}
+              name="phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder={t.phonePlaceholder}
+              maxLength={24}
+              required
+              aria-invalid={invalid("phone")}
+              aria-describedby={described("phone")}
+            />
+            {error("phone")}
           </div>
 
           <div className={s.field}>

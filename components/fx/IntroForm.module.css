@@ -73,6 +73,9 @@
   background-position: right 1rem center;
   cursor: pointer;
 }
+.field input::placeholder {
+  color: color-mix(in srgb, var(--f-muted) 55%, transparent);
+}
 .field input:hover,
 .field select:hover,
 .field textarea:hover {

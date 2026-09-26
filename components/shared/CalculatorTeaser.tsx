@@ -19,7 +19,7 @@ const FIELDS: Field[] = [
   { key: "initial", label: "Pradinė suma", min: 0, max: 50000, step: 500, format: eur.format },
   { key: "monthly", label: "Mėnesinė investicija", min: 0, max: 2000, step: 25, format: eur.format },
   { key: "years", label: "Investavimo laikotarpis", min: 1, max: 40, step: 1, format: (v) => `${v} m.` },
-  { key: "rate", label: "Hipotetinė metinė grąža", min: 0, max: 10, step: 0.5, format: (v) => `${String(v).replace(".", ",")} %` },
+  { key: "rate", label: calculator.rateLabel, min: 0, max: calculator.rateMax, step: 0.5, format: (v) => `${String(v).replace(".", ",")} %` },
 ];
 
 /**
@@ -84,11 +84,11 @@ export default function CalculatorTeaser({ className }: { className?: string }) 
           </div>
           <dl className={styles.split}>
             <div>
-              <dt>Įnešta</dt>
+              <dt>{calculator.paidLabel}</dt>
               <dd>{eur.format(last.paid)}</dd>
             </div>
             <div>
-              <dt>Hipotetinis prieaugis</dt>
+              <dt>{calculator.growthLabel}</dt>
               <dd>{eur.format(Math.max(0, last.value - last.paid))}</dd>
             </div>
           </dl>
@@ -103,7 +103,7 @@ export default function CalculatorTeaser({ className }: { className?: string }) 
             <i className={styles.keyValue} /> Iliustracinė vertė
           </span>
           <span>
-            <i className={styles.keyPaid} /> Įnešta suma
+            <i className={styles.keyPaid} /> {calculator.paidLegend}
           </span>
         </div>
         <p className={styles.disclaimer}>{calculator.disclaimer}</p>

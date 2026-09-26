@@ -1,96 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, type CSSProperties, type MouseEvent } from "react";
+import { useId, useRef, type CSSProperties, type MouseEvent } from "react";
 import Photo from "@/components/shared/Photo";
 import { brand, cta, finalCta, profileSheet as p } from "@/content/site";
+import { goToForm, useModalDialog } from "./useModalDialog";
 import s from "./ProfileSheet.module.css";
 
 const order = (i: number): CSSProperties => ({ ["--i" as string]: i });
 
-function lockScroll(on: boolean) {
-  const html = document.documentElement;
-  // gutter lieka – puslapis nepašoka, kai dingsta slinkties juosta
-  html.style.scrollbarGutter = on ? "stable" : "";
-  html.style.overflow = on ? "hidden" : "";
-}
-
 /**
  * „Plačiau apie mane“: mygtukas ir konsultanto „faktų lapas“.
- * Natūralus <dialog>: fokusas lieka viduje, Esc ir paspaudimas šalia uždaro, puslapis nejuda.
  * Kompiuteryje panelė įslysta iš dešinės, telefone – iš apačios.
  */
 export default function ProfileSheet({ className }: { className?: string }) {
-  const ref = useRef<HTMLDialogElement>(null);
+  const { ref, open: show, close, backdrop } = useModalDialog();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const stopClosing = useRef<(() => void) | null>(null);
-  const downOnBackdrop = useRef(false);
   const titleId = useId();
 
   const open = () => {
-    const d = ref.current;
-    if (!d || d.open) return;
-    lockScroll(true);
-    d.showModal();
+    show();
     scrollRef.current?.scrollTo(0, 0);
   };
 
-  /** Uždarymas su animacija; `after` – kas daroma iškart po uždarymo. */
-  const close = useCallback((after?: () => void) => {
-    const d = ref.current;
-    if (!d?.open || stopClosing.current) return;
-    d.dataset.closing = "true";
-    const stop = () => {
-      window.clearTimeout(timer);
-      d.removeEventListener("animationend", onEnd);
-      delete d.dataset.closing;
-      stopClosing.current = null;
-    };
-    const finish = () => {
-      stop();
-      d.close();
-      lockScroll(false);
-      after?.();
-    };
-    const onEnd = (e: AnimationEvent) => {
-      if (e.target === d && !e.pseudoElement) finish();
-    };
-    const timer = window.setTimeout(finish, 520);
-    d.addEventListener("animationend", onEnd);
-    stopClosing.current = stop;
-  }, []);
-
-  useEffect(() => {
-    const d = ref.current;
-    if (!d) return;
-    // Esc: vietoj staigaus uždarymo – animuotas
-    const onCancel = (e: Event) => {
-      e.preventDefault();
-      close();
-    };
-    // bet koks uždarymas (ir naršyklės priverstinis) atrakina puslapį
-    const onClose = () => {
-      stopClosing.current?.();
-      lockScroll(false);
-    };
-    d.addEventListener("cancel", onCancel);
-    d.addEventListener("close", onClose);
-    return () => {
-      d.removeEventListener("cancel", onCancel);
-      d.removeEventListener("close", onClose);
-      lockScroll(false);
-    };
-  }, [close]);
-
   const toContact = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    close(() => {
-      const target = document.querySelector<HTMLElement>(cta.href);
-      target?.scrollIntoView({ behavior: "smooth", block: "start" });
-      // pirmas matomas laukas (React formoje prideda ir paslėptų laukų)
-      target
-        ?.querySelector<HTMLElement>('input:not([type="hidden"]):not([tabindex="-1"]), select, textarea')
-        ?.focus({ preventScroll: true });
-    });
+    close(() => goToForm(cta.href));
   };
 
   const storyStart = p.facts.length + 2;
@@ -112,18 +46,7 @@ export default function ProfileSheet({ className }: { className?: string }) {
         </span>
       </button>
 
-      <dialog
-        ref={ref}
-        className={s.sheet}
-        aria-labelledby={titleId}
-        onPointerDown={(e) => {
-          downOnBackdrop.current = e.target === e.currentTarget;
-        }}
-        onClick={(e) => {
-          if (downOnBackdrop.current && e.target === e.currentTarget) close();
-          downOnBackdrop.current = false;
-        }}
-      >
+      <dialog ref={ref} className={s.sheet} aria-labelledby={titleId} {...backdrop}>
         <div ref={scrollRef} className={s.scroll}>
           <header className={s.bar}>
             <p className={s.kicker}>{p.kicker}</p>

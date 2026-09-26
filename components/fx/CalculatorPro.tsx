@@ -10,7 +10,7 @@ type Key = "initial" | "monthly" | "years" | "rate";
 const FIELDS: { key: Key; label: string; min: number; max: number; step: number; format: (v: number) => string }[] = [
   { key: "initial", label: "Pradinė suma", min: 0, max: 50000, step: 500, format: eur.format },
   { key: "monthly", label: "Mėnesinė investicija", min: 0, max: 2000, step: 25, format: eur.format },
-  { key: "rate", label: "Hipotetinė metinė grąža", min: 0, max: 10, step: 0.5, format: (v) => `${String(v).replace(".", ",")} %` },
+  { key: "rate", label: calculator.rateLabel, min: 0, max: calculator.rateMax, step: 0.5, format: (v) => `${String(v).replace(".", ",")} %` },
 ];
 const YEAR_PRESETS = [5, 10, 20, 30];
 
@@ -129,13 +129,13 @@ export default function CalculatorPro() {
         <dl className={styles.legend}>
           <div>
             <dt>
-              <i className={styles.keyPaid} /> Įnešta
+              <i className={styles.keyPaid} /> {calculator.paidLabel}
             </dt>
             <dd>{eur.format(Math.round(paidT))}</dd>
           </div>
           <div>
             <dt>
-              <i className={styles.keyGrowth} /> Hipotetinis prieaugis
+              <i className={styles.keyGrowth} /> {calculator.growthLabel}
             </dt>
             <dd>{eur.format(Math.round(growth))}</dd>
           </div>

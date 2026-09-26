@@ -102,7 +102,8 @@ export default function GuidedPath() {
                 )}
               </ul>
               <div className={styles.actions}>
-                <a href={cta.href} className={styles.primary}>
+                {/* data-topic: jei puslapyje yra registracijos forma, situacija joje parenkama iš karto */}
+                <a href={cta.href} className={styles.primary} data-topic={svc.situation}>
                   {cta.intro} <span aria-hidden="true">→</span>
                 </a>
                 <button
