@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  // Buvusios dizaino kryptys (klientui siųstos nuorodos) – į pagrindinį puslapį.
+  async redirects() {
+    return [{ source: "/design-:n", destination: "/", permanent: false }];
+  },
 };
 
 export default nextConfig;

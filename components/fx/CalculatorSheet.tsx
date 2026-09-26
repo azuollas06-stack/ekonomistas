@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useId } from "react";
-import CalculatorTeaser from "@/components/shared/CalculatorTeaser";
+import Calculator from "./Calculator";
 import { calculator, cta } from "@/content/site";
 import { goToForm, useModalDialog } from "./useModalDialog";
 import s from "./CalculatorSheet.module.css";
 
 /**
- * Skaičiuoklė atskirame lange (11 kryptis): puslapyje jos nėra, ji atsidaro tik paspaudus
+ * Skaičiuoklė atskirame lange: puslapyje jos nėra, ji atsidaro tik paspaudus
  * nuorodą į `hash` (meniu „Skaičiuoklė“ – ir kompiuterio, ir telefono) arba atėjus su tuo adresu.
  */
 export default function CalculatorSheet({ hash = "#skaiciuokle" }: { hash?: string }) {
@@ -46,9 +46,7 @@ export default function CalculatorSheet({ hash = "#skaiciuokle" }: { hash?: stri
             <p className={s.lead}>{calculator.lead}</p>
           </div>
 
-          <div className={s.card}>
-            <CalculatorTeaser />
-          </div>
+          <Calculator />
 
           <div className={s.foot}>
             <p>{calculator.ctaLead}</p>

@@ -1,6 +1,7 @@
 /*
- * 11 kryptis – švaresnė, profesionalesnė 03/05 hibrido versija.
- * Mobile-first. Mažiau rėmelių, vienoda plona tipografija, subtilios animacijos.
+ * Pagrindinis puslapis (buvusi 11 kryptis).
+ * Mobile-first. Mažiau rėmelių, vienoda plona tipografija, subtilios animacijos,
+ * tamsios ir šviesios sekcijos susilieja per švelnius gradientus.
  */
 .page {
   --bg: #f7f4f1;
@@ -333,7 +334,9 @@ a:focus-visible > .arrow {
 .line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.06em;
+  /* vieta raidžių „g“, „j“ uodegoms */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 .line > * {
   display: inline-block;
@@ -665,9 +668,44 @@ a:focus-visible > .arrow {
   }
 }
 
+/* ---------- ŠVELNŪS PERĖJIMAI tarp tamsių ir šviesių sekcijų ---------- */
+/* daug sustojimų oklab erdvėje – be juostelių ir be kietos ribos */
+.blendToLight,
+.blendToDark {
+  --from: var(--dark);
+  --to: var(--bg);
+
+  height: clamp(5rem, 13vw, 9rem);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--from) 0%,
+    color-mix(in oklab, var(--from) 86%, var(--to)) 18%,
+    color-mix(in oklab, var(--from) 66%, var(--to)) 33%,
+    color-mix(in oklab, var(--from) 45%, var(--to)) 47%,
+    color-mix(in oklab, var(--from) 26%, var(--to)) 61%,
+    color-mix(in oklab, var(--from) 11%, var(--to)) 75%,
+    color-mix(in oklab, var(--from) 3%, var(--to)) 89%,
+    var(--to) 100%
+  );
+}
+/* 1 px užlaida – kad per trupmeninį aukštį neprasišviestų plona siūlė */
+.blendToLight {
+  margin-top: -1px;
+}
+.blendToDark {
+  --from: var(--bg);
+  --to: var(--dark);
+  /* tarpas iki gradiento, kad turinys nestovėtų ant tamsėjančio fono */
+  margin: clamp(4rem, 10vw, 7rem) 0 -1px;
+}
+/* sekcija po perėjimo – mažesnis viršutinis tarpas, nes jį jau sudaro gradientas */
+.section.tight {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+}
+
 /* ---------- POKALBIS ---------- */
 .intro {
-  margin-top: clamp(5rem, 13vw, 9.5rem);
   background: var(--dark);
   color: var(--cream);
 }
@@ -986,7 +1024,6 @@ a:focus-visible > .arrow {
 
 /* ---------- CTA + FOOTER ---------- */
 .final {
-  margin-top: clamp(5rem, 13vw, 9.5rem);
   background: var(--dark);
   color: var(--cream);
 }
@@ -1112,7 +1149,7 @@ a:focus-visible > .arrow {
   gap: 0.75rem;
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 var(--g) 5.5rem;
+  padding: 0 var(--g) 2.5rem;
   font-size: 0.8125rem;
 }
 .footerBottom p:first-child {

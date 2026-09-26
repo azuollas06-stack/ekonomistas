@@ -10,10 +10,8 @@ import {
   services,
   process,
   introCall,
+  introForm,
   about,
-  portfolioCompare,
-  planPreview,
-  calculator,
   notes,
   faq,
   finalCta,
@@ -22,30 +20,24 @@ import {
   sampleTestimonials,
 } from "@/content/site";
 import Photo from "@/components/shared/Photo";
-import SignatureNav from "@/components/fx/SignatureNav";
-import CalculatorPro from "@/components/fx/CalculatorPro";
+import MobileNav from "@/components/shared/MobileNav";
 import ConsentButton from "@/components/shared/ConsentButton";
-import DesignSwitcher from "@/components/shared/DesignSwitcher";
 import CountUp from "@/components/fx/CountUp";
 import ScrollHeader from "@/components/fx/ScrollHeader";
-import IntroCurtain from "@/components/fx/IntroCurtain";
-import Magnetic from "@/components/fx/Magnetic";
-import ScrollWords from "@/components/fx/ScrollWords";
 import GuidedPath from "@/components/fx/GuidedPath";
-import HorizontalSteps from "@/components/fx/HorizontalSteps";
-import PlanPreview from "@/components/fx/PlanPreview";
-import ReviewCarousel from "@/components/fx/ReviewCarousel";
-import PortfolioCompare from "@/components/fx/PortfolioCompare";
-import s from "./ConsultantSignature.module.css";
+import IntroForm from "@/components/fx/IntroForm";
+import CalculatorSheet from "@/components/fx/CalculatorSheet";
+import s from "./HomePage.module.css";
 
+// Kompetencijos – tik kliento pateikti teiginiai.
 const FACTS = [
   { key: "patirtis", value: <CountUp to={5} suffix="+" />, label: "metų patirtis investavimo srityje" },
   { key: "issilavinimas", value: "Ekonomika", label: "išsilavinimas" },
   { key: "licencija", value: "BFAA", label: "investavimo konsultanto (IA) licencija" },
   { key: "nepriklausomas", value: "Nepriklausomas", label: "nesusietas su viena platforma" },
 ];
-const PRINCIPLES = ["Ilgalaikis investavimas", "Diversifikacija", "Nepriklausomumas", "Individualus planas", "Aiškumas", "ETF", "Rizikos valdymas"];
 
+/** Laiptuoto atsiradimo delsa (globalus [data-reveal] naudoja --d). */
 const delay = (i: number, step = 90): CSSProperties => ({ ["--d" as string]: `${i * step}ms` });
 
 function Arrow() {
@@ -56,39 +48,17 @@ function Arrow() {
   );
 }
 
-/** Plona „augimo“ linija hero'je – dekoratyvi, be skaičių ir be jokių grąžos teiginių. */
-function GrowthStroke({ className, id }: { className?: string; id: string }) {
-  return (
-    <div className={className} aria-hidden="true">
-      <svg viewBox="0 0 1200 400" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id={id} x1="0" x2="1">
-            <stop offset="0" stopColor="currentColor" stopOpacity="0" />
-            <stop offset="0.25" stopColor="currentColor" stopOpacity="0.55" />
-            <stop offset="1" stopColor="currentColor" stopOpacity="1" />
-          </linearGradient>
-        </defs>
-        <path
-          pathLength={1}
-          d="M0 360 C 90 350, 140 330, 200 336 S 300 300, 360 306 S 450 262, 520 270 S 610 236, 660 246 S 760 196, 820 204 S 910 150, 980 150 S 1080 96, 1200 60"
-          stroke={`url(#${id})`}
-        />
-      </svg>
-      {/* taškas atskiru elementu, kad nesiištemptų kartu su SVG */}
-      <span className={s.strokeDot} />
-    </div>
-  );
-}
-
-/** 13 kryptis: 11 pagrindas + „parašo“ detalės (įžanga, augimo linija, 3 klausimų kelias, plano pavyzdys, palyginimas). */
-export default function ConsultantSignature({ current }: { current: number }) {
+/**
+ * Pagrindinis puslapis (klientas pasirinko šią dizaino kryptį iš 14 variantų).
+ * Tamsios ir šviesios sekcijos susilieja per švelnius gradientus (.blendToLight / .blendToDark).
+ * Skaičiuoklė puslapyje nerodoma – ji atsidaro atskirame lange iš meniu „Skaičiuoklė“.
+ */
+export default function HomePage() {
   const reviews = testimonials.length > 0 ? testimonials : sampleTestimonials;
   const isSample = testimonials.length === 0;
 
   return (
     <div className={s.page}>
-      <IntroCurtain label={brand.name} />
-
       <a className="skip-link" href="#turinys">
         Pereiti prie turinio
       </a>
@@ -96,20 +66,21 @@ export default function ConsultantSignature({ current }: { current: number }) {
       <ScrollHeader className={s.header} progressClassName={s.progress}>
         <div className={s.headerInner}>
           <a href="#pagrindinis" className={s.brand}>
-            <span className={s.mark} aria-hidden="true">
-              ML
-            </span>
-            <span className={s.brandName}>{brand.name}</span>
+            {brand.siteName}
           </a>
-          <SignatureNav
-            links={nav}
-            ctaLabel={cta.intro}
-            ctaHref={cta.href}
-            desktopCtaLabel={cta.primary}
-            name={brand.name}
-            role={brand.role}
-            instagram={brand.instagram}
-          />
+          <nav aria-label="Pagrindinė navigacija" className={s.nav}>
+            <ul role="list">
+              {nav.slice(1).map((l) => (
+                <li key={l.href}>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <a href={cta.href} className={s.headerCta}>
+            {cta.primary}
+          </a>
+          <MobileNav links={nav} ctaLabel={cta.intro} ctaHref={cta.href} panelClassName={s.mobilePanel} />
         </div>
       </ScrollHeader>
 
@@ -119,12 +90,8 @@ export default function ConsultantSignature({ current }: { current: number }) {
           <div className={s.heroMedia}>
             <Photo name="portrait" className={s.heroPhoto} sizes="(min-width: 960px) 55vw, 100vw" priority reveal={false} position="50% 20%" />
           </div>
-          <GrowthStroke className={s.stroke} id="gs-hero" />
           <div className={s.heroText}>
-            <p className={`${s.kicker} ${s.in}`} style={delay(0, 110)}>
-              <span className={s.live} aria-hidden="true" />
-              {brand.role}
-            </p>
+            <p className={`${s.kicker} ${s.in}`}>{brand.role}</p>
             <h1 id="hero-title" className={s.heroTitle}>
               <span className={s.line}>
                 <span style={delay(1, 110)}>Investuoti gali</span>
@@ -140,12 +107,10 @@ export default function ConsultantSignature({ current }: { current: number }) {
               {hero.body}
             </p>
             <div className={`${s.actions} ${s.in}`} style={delay(6, 110)}>
-              <Magnetic>
-                <a href={cta.href} className={s.btnLight}>
-                  {cta.intro}
-                  <Arrow />
-                </a>
-              </Magnetic>
+              <a href={cta.href} className={s.btnLight}>
+                {cta.intro}
+                <Arrow />
+              </a>
               <a href={cta.href} className={s.btnGhostLight}>
                 {cta.primary}
               </a>
@@ -159,46 +124,37 @@ export default function ConsultantSignature({ current }: { current: number }) {
               </li>
             ))}
           </ul>
-          <span className={s.scrollHint} aria-hidden="true">
-            <span />
-          </span>
         </section>
 
-        {/* PRINCIPŲ JUOSTA */}
-        <div className={s.ribbon} aria-hidden="true">
-          <div className={s.ribbonTrack}>
-            {[...PRINCIPLES, ...PRINCIPLES].map((p, i) => (
-              <span key={i}>
-                {p}
-                <i>✦</i>
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className={s.fadeToLight} aria-hidden="true" />
+        <div className={s.blendToLight} aria-hidden="true" />
 
-        {/* ĮŽANGA – žodžiai užsidega slenkant */}
+        {/* ĮŽANGA */}
         <section className={`${s.section} ${s.tight}`} aria-labelledby="problem-title">
-          <p className={s.eyebrow}>Įžanga</p>
-          <h2 id="problem-title" className={s.statementTitle}>
-            {problem.title}
-          </h2>
-          <ScrollWords text={problem.body} className={s.scrollText} />
-          <p className={s.bridge} data-reveal>
-            <span className={s.bridgeDot} aria-hidden="true" />
-            {problem.bridge}
-          </p>
+          <div className={s.statement}>
+            <p className={s.eyebrow} data-reveal>
+              Įžanga
+            </p>
+            <h2 id="problem-title" className={s.statementTitle} data-reveal>
+              {problem.title}
+            </h2>
+            <div className={s.statementText}>
+              <p data-reveal>{problem.body}</p>
+              <p data-reveal style={delay(1)} className={s.muted}>
+                {problem.bridge}
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* 3 KLAUSIMŲ KELIAS */}
         <section className={s.section} aria-labelledby="path-title">
-          <div className={s.split}>
-            <div className={s.splitText}>
-              <p className={s.eyebrow}>Jūsų situacija</p>
+          <div className={s.toolRow}>
+            <div className={s.toolText}>
+              <p className={s.eyebrow}>Trys klausimai</p>
               <h2 id="path-title" className={s.h2} data-reveal>
                 {guidedPath.title}
               </h2>
-              <p className={s.lead} data-reveal>
+              <p className={s.muted} data-reveal>
                 {guidedPath.lead}
               </p>
             </div>
@@ -208,7 +164,7 @@ export default function ConsultantSignature({ current }: { current: number }) {
           </div>
         </section>
 
-        {/* PASLAUGOS */}
+        {/* PASLAUGOS – kortelės kraunasi viena ant kitos */}
         <section id="paslaugos" className={s.section} aria-labelledby="services-title">
           <div className={s.head}>
             <p className={s.eyebrow}>Paslaugos</p>
@@ -222,10 +178,9 @@ export default function ConsultantSignature({ current }: { current: number }) {
           <ul role="list" className={s.stack}>
             {services.map((svc, i) => (
               <li key={svc.id} className={s.stackCard} style={{ ["--i" as string]: i, ["--n" as string]: services.length }}>
-                <span className={s.stackGlow} aria-hidden="true" />
                 <div className={s.stackInner}>
                   <div className={s.stackTop}>
-                    <span className={s.stackSituation}>„{svc.situation}“</span>
+                    <span className={s.stackSituation}>{svc.situation}</span>
                     <span className={s.stackCount} aria-hidden="true">
                       {String(i + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
                     </span>
@@ -243,33 +198,32 @@ export default function ConsultantSignature({ current }: { current: number }) {
           </ul>
         </section>
 
-        {/* PROCESAS – horizontalus kompiuteryje */}
-        <section className={s.processSection} aria-labelledby="process-title">
-          <HorizontalSteps
-            steps={process.steps}
-            heading={
-              <div>
-                <p className={s.eyebrow}>Procesas</p>
-                <h2 id="process-title" className={s.h2}>
-                  {process.title}
-                </h2>
-              </div>
-            }
-            finalCard={
-              <>
-                <p className={s.finalCardKicker}>Pirmas žingsnis</p>
-                <p className={s.finalCardTitle}>{cta.intro}</p>
-                <a href={cta.href} className={s.btnLight}>
-                  {cta.introUpper}
-                  <Arrow />
-                </a>
-              </>
-            }
-          />
+        {/* PROCESAS */}
+        <section className={s.section} aria-labelledby="process-title">
+          <div className={s.head}>
+            <p className={s.eyebrow}>Procesas</p>
+            <h2 id="process-title" className={s.h2} data-reveal>
+              {process.title}
+            </h2>
+          </div>
+          <ol role="list" className={s.steps}>
+            {process.steps.map((step, i) => (
+              <li key={step.n} data-reveal style={delay(i, 110)}>
+                <span className={s.stepN} aria-hidden="true">
+                  {step.n}
+                </span>
+                <h3 className={s.stepTitle}>
+                  <span className="sr-only">{step.n}. </span>
+                  {step.title}
+                </h3>
+                <p className={s.stepBody}>{step.body}</p>
+              </li>
+            ))}
+          </ol>
         </section>
 
-        {/* POKALBIS */}
-        <div className={s.fadeToDark} aria-hidden="true" />
+        {/* POKALBIS – tamsi juosta */}
+        <div className={s.blendToDark} aria-hidden="true" />
         <section className={s.intro} aria-labelledby="intro-title">
           <div className={s.introInner}>
             <div>
@@ -298,44 +252,20 @@ export default function ConsultantSignature({ current }: { current: number }) {
                 ))}
               </ul>
               <p className={s.introNote}>{introCall.note}</p>
-              <Magnetic>
-                <a href={cta.href} className={s.btnLight}>
-                  {cta.introUpper}
-                  <Arrow />
-                </a>
-              </Magnetic>
+              <a href={cta.href} className={s.btnLight}>
+                {cta.introUpper}
+                <Arrow />
+              </a>
             </div>
-          </div>
-        </section>
-
-        <div className={s.fadeToLight} aria-hidden="true" />
-
-        {/* PLANO PAVYZDYS */}
-        <section className={`${s.section} ${s.tight}`} aria-labelledby="plan-title">
-          <div className={s.split}>
-            <div className={s.splitText}>
-              <p className={s.eyebrow}>Rezultatas</p>
-              <h2 id="plan-title" className={s.h2} data-reveal>
-                {planPreview.title}
-              </h2>
-              <p className={s.lead} data-reveal>
-                {planPreview.lead}
-              </p>
-            </div>
-            <PlanPreview />
           </div>
         </section>
 
         {/* APIE */}
-        <section id="apie" className={s.section} aria-labelledby="about-title">
+        <div className={s.blendToLight} aria-hidden="true" />
+
+        <section id="apie" className={`${s.section} ${s.tight}`} aria-labelledby="about-title">
           <div className={s.about}>
-            <div className={s.aboutMedia}>
-              <Photo name="desk" className={s.aboutPhoto} sizes="(min-width: 960px) 40vw, 100vw" position="50% 25%" />
-              <p className={s.aboutTag}>
-                <span className={s.live} aria-hidden="true" />
-                {brand.name}
-              </p>
-            </div>
+            <Photo name="desk" className={s.aboutPhoto} sizes="(min-width: 960px) 40vw, 100vw" position="50% 25%" />
             <div className={s.aboutText}>
               <p className={s.eyebrow}>{about.title}</p>
               <h2 id="about-title" className={s.h2} data-reveal>
@@ -344,14 +274,11 @@ export default function ConsultantSignature({ current }: { current: number }) {
               <p className={s.aboutLead} data-reveal>
                 {about.paragraphs[0]}
               </p>
-              <blockquote className={s.pull} data-reveal>
-                <p>{about.pullQuote}</p>
-              </blockquote>
               <p className={s.muted} data-reveal>
-                {about.paragraphs[4]}
+                {about.paragraphs[3]}
               </p>
               <p className={s.muted} data-reveal>
-                {about.paragraphs[7]}
+                {about.paragraphs[4]}
               </p>
               <ul role="list" className={s.principles}>
                 {about.principles.map((p, i) => (
@@ -380,43 +307,20 @@ export default function ConsultantSignature({ current }: { current: number }) {
               </p>
             )}
           </div>
-          <div data-reveal>
-            <ReviewCarousel reviews={reviews} isSample={isSample} />
-          </div>
-        </section>
-
-        {/* PORTFELIO PALYGINIMAS */}
-        <section className={s.section} aria-labelledby="compare-title">
-          <div className={s.toolRow}>
-            <div className={s.toolText}>
-              <p className={s.eyebrow}>Portfelio peržiūra</p>
-              <h2 id="compare-title" className={s.h2} data-reveal>
-                {portfolioCompare.title}
-              </h2>
-              <p className={s.muted} data-reveal>
-                {portfolioCompare.lead}
-              </p>
-            </div>
-            <div data-reveal>
-              <PortfolioCompare />
-            </div>
-          </div>
-        </section>
-
-        {/* SKAIČIUOKLĖ */}
-        <section id="skaiciuokle" className={s.section} aria-labelledby="calc-title">
-          <div className={s.head}>
-            <p className={s.eyebrow}>{calculator.title}</p>
-            <h2 id="calc-title" className={s.h2} data-reveal>
-              Kiek galėtų sukaupti reguliarumas?
-            </h2>
-            <p className={s.lead} data-reveal>
-              {calculator.lead}
-            </p>
-          </div>
-          <div data-reveal>
-            <CalculatorPro />
-          </div>
+          <ul role="list" className={s.reviews}>
+            {reviews.map((t, i) => (
+              <li key={i} className={s.review} data-reveal style={delay(i, 120)}>
+                <blockquote className={s.quote}>
+                  <p>{t.quote}</p>
+                </blockquote>
+                <p className={s.who}>
+                  <b>{t.name}</b>
+                  {t.context && <span> · {t.context}</span>}
+                  {isSample && <span className={s.badge}>Pavyzdys</span>}
+                </p>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* UŽRAŠAI */}
@@ -438,9 +342,6 @@ export default function ConsultantSignature({ current }: { current: number }) {
           <ul role="list" className={s.notes}>
             {notes.topics.map((n, i) => (
               <li key={n.title} data-reveal style={delay(i)}>
-                <span className={s.noteIndex} aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <span className={s.noteTag}>{n.tag}</span>
                 <span className={s.noteTitle}>{n.title}</span>
               </li>
@@ -470,37 +371,39 @@ export default function ConsultantSignature({ current }: { current: number }) {
           </div>
         </section>
 
-        {/* CTA */}
-        <div className={s.fadeToDark} aria-hidden="true" />
+        {/* KONTAKTAI: registracija pokalbiui */}
+        <div className={s.blendToDark} aria-hidden="true" />
         <section id="kontaktai" className={s.final} aria-labelledby="final-title">
-          <GrowthStroke className={s.finalStroke} id="gs-final" />
           <div className={s.finalInner}>
-            <p className={s.eyebrowLight}>{introCall.eyebrow}</p>
-            <h2 id="final-title" className={s.finalTitle} data-reveal>
-              {finalCta.title}
-            </h2>
-            <p className={s.finalBody} data-reveal>
-              {finalCta.body}
-            </p>
-            <div className={s.actions} data-reveal>
-              <Magnetic>
-                <a href={cta.href} className={s.btnLight}>
-                  {cta.intro}
-                  <Arrow />
+            <div className={s.finalText}>
+              <p className={s.eyebrowLight}>{introCall.eyebrow}</p>
+              <h2 id="final-title" className={s.finalTitle} data-reveal>
+                {finalCta.title}
+              </h2>
+              <p className={s.finalBody} data-reveal>
+                {finalCta.body}
+              </p>
+              <ul role="list" className={s.finalPoints} data-reveal>
+                <li>Nemokamai</li>
+                <li>{introCall.note.replace(".", "")}</li>
+                <li>Nepriklausomai</li>
+              </ul>
+              <p className={s.finalAlt} data-reveal>
+                {introForm.alt}{" "}
+                <a href={brand.instagram.url} target="_blank" rel="noopener noreferrer">
+                  {brand.instagram.handle}
+                  <span className="sr-only"> (atsidaro naujame lange)</span>
                 </a>
-              </Magnetic>
-              <a href={cta.href} className={s.btnGhostLight}>
-                {cta.primary}
-              </a>
+              </p>
+            </div>
+            <div data-reveal>
+              <IntroForm />
             </div>
           </div>
         </section>
       </main>
 
       <footer className={s.footer}>
-        <p className={s.bigName} aria-hidden="true">
-          {brand.name}
-        </p>
         <div className={s.footerInner}>
           <div>
             <p className={s.footerName}>{brand.name}</p>
@@ -520,11 +423,6 @@ export default function ConsultantSignature({ current }: { current: number }) {
             <li>
               <ConsentButton className={s.linkButton} />
             </li>
-            <li>
-              <a href="#pagrindinis" className={s.toTop}>
-                Į viršų <span aria-hidden="true">↑</span>
-              </a>
-            </li>
           </ul>
         </div>
         <div className={s.footerBottom}>
@@ -535,7 +433,8 @@ export default function ConsultantSignature({ current }: { current: number }) {
         </div>
       </footer>
 
-      <DesignSwitcher current={current} />
+      {/* skaičiuoklė puslapyje nerodoma – atsidaro tik paspaudus „Skaičiuoklė“ meniu */}
+      <CalculatorSheet />
     </div>
   );
 }

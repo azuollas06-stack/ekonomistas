@@ -1,6 +1,6 @@
 /**
  * Visas pagrindinio puslapio turinys vienoje vietoje.
- * Visi 5 dizaino variantai naudoja tuos pačius duomenis – keičiasi tik pateikimas.
+ * Komponentai tekstų nekeičia – juos redaguokite čia.
  *
  * TEISINĖ PASTABA: čia naudojami tik kliento pateikti teiginiai.
  * Nepridėkite teiginių apie licencijas, garantijas ar grąžą be kliento patvirtinimo.
@@ -9,7 +9,7 @@
 export const brand = {
   name: "Marius Lencevičius",
   firstName: "Marius",
-  /** Svetainės pavadinimas antraštėje (11 kryptis) – kaip Instagram paskyra */
+  /** Svetainės pavadinimas antraštėje – kaip Instagram paskyra */
   siteName: "Ekonomisto užrašai",
   role: "Nepriklausomas investavimo konsultantas",
   tagline: "Investuoti gali kiekvienas.",
@@ -44,23 +44,6 @@ export const hero = {
   body: "Investavimo sprendimus pritaikau individualiai – atsižvelgiant į žmogaus finansinę situaciją, tikslus, investavimo laikotarpį ir rizikos toleranciją.",
 };
 
-export const credentials = [
-  { key: "patirtis", value: "5+", short: "metų patirtis", label: "5+ metų patirtis investavimo srityje" },
-  { key: "issilavinimas", value: "Ekonomika", short: "išsilavinimas", label: "Ekonomikos išsilavinimas" },
-  { key: "licencija", value: "BFAA", short: "investavimo konsultanto (IA) licencija", label: "BFAA investavimo konsultanto (IA) licencija" },
-] as const;
-
-/**
- * Valdomų klientų investicijų apimtis (14 kryptis).
- * TODO: prieš publikuojant patvirtinti su klientu tikslią sumą ir formuluotę.
- */
-export const aum = {
-  /** tūkstančiais eurų – skaičiaus animacijai */
-  thousands: 200,
-  suffix: " 000 €+",
-  label: "valdomų klientų investicijų",
-};
-
 export const problem = {
   title: "Norite investuoti, bet nežinote, nuo ko pradėti?",
   body: "Galbūt apie investavimą galvojate jau kurį laiką, tačiau vis atidėliojate, nes trūksta žinių, kyla per daug klausimų arba tiesiog nežinote, koks sprendimas būtų tinkamas būtent jums.",
@@ -86,7 +69,7 @@ export const servicesIntro = {
 
 /**
  * Paslaugos. Penktą paslaugą pridėkite tiesiog kaip naują objektą šiame masyve –
- * visi variantai (sąrašai, tinkleliai, „Kur esate šiandien?“) prisitaikys automatiškai.
+ * paslaugų kortelės, 3 klausimų kelias ir formos situacijų sąrašas prisitaikys automatiškai.
  */
 export const services: Service[] = [
   {
@@ -153,7 +136,7 @@ export const introCall = {
 };
 
 /**
- * Registracijos pokalbiui formos tekstai (11 ir 14 kryptys). Laukai atitinka lib/forms/intro-call.ts.
+ * Registracijos pokalbiui formos tekstai. Laukai atitinka lib/forms/intro-call.ts.
  * TODO: kai forma bus prijungta prie el. pašto, „preview*“ tekstus pakeisti tikru patvirtinimu.
  */
 export const introForm = {
@@ -198,69 +181,6 @@ export const about = {
   ],
 };
 
-type ProfileStory = { title: string; paragraphs: string[]; points?: { title: string; body: string }[] };
-
-/**
- * „Plačiau apie mane“ panelė (14 kryptis) – konsultanto „faktų lapas“.
- * Tekstai paimti iš `about` ir `aum` – čia tik jų išdėstymas blokais.
- */
-export const profileSheet = {
-  open: "Plačiau apie mane",
-  openHint: "Faktų lapas: patirtis, licencija, principai",
-  kicker: "Konsultanto faktų lapas",
-  close: "Uždaryti",
-  notesLabel: "Investavimo užrašai",
-  facts: [
-    { label: "Valdomos investicijos", value: `${aum.thousands}${aum.suffix}` },
-    { label: "Patirtis", value: "5+ metai investavimo srityje" },
-    { label: "Išsilavinimas", value: "Ekonomikos studijos" },
-    { label: "Licencija", value: "BFAA investavimo konsultanto (IA)" },
-    { label: "Nepriklausomumas", value: "Nesusietas su viena investavimo platforma" },
-    { label: "Padedu", value: "Pradedantiems ir jau investuojantiems, tėvams, įmonėms" },
-  ],
-  story: [
-    { title: "Kodėl pradėjau", paragraphs: about.paragraphs.slice(0, 3) },
-    { title: "Kaip dirbu", paragraphs: [about.paragraphs[6]], points: about.principles.slice(0, 2) },
-    { title: "Kuo skiriuosi", paragraphs: [about.paragraphs[7]] },
-  ] as ProfileStory[],
-};
-
-export const situationPicker = {
-  title: "Kur esate šiandien?",
-  lead: "Pasirinkite, kas geriausiai apibūdina jūsų situaciją.",
-};
-
-/** DEMONSTRACINIAI duomenys – ne reali rekomendacija ir ne reali kliento informacija. */
-export const xray = {
-  title: "Kaip atrodo portfelio peržiūra",
-  lead: "Konsultacijos metu esamą ar planuojamą portfelį išskaidome į sudedamąsias dalis: kur investuota, kiek diversifikuota ir kokia rizika prisiimama.",
-  badge: "Demonstracinis pavyzdys",
-  disclaimer: "Duomenys išgalvoti ir skirti tik iliustracijai. Tai nėra investavimo rekomendacija.",
-  assets: [
-    { label: "Akcijų ETF", value: 55 },
-    { label: "Obligacijų ETF", value: 30 },
-    { label: "Pavienės akcijos", value: 10 },
-    { label: "Grynieji pinigai", value: 5 },
-  ],
-  regions: [
-    { label: "Šiaurės Amerika", value: 52 },
-    { label: "Europa", value: 26 },
-    { label: "Azija ir Ramusis vandenynas", value: 12 },
-    { label: "Besivystančios rinkos", value: 10 },
-  ],
-  metrics: [
-    { label: "Pozicijų skaičius", value: "7" },
-    { label: "Didžiausia pozicija", value: "32 %" },
-    { label: "Vid. metinis išlaidų koef.", value: "0,21 %" },
-  ],
-  risk: { label: "Rizikos lygis", value: 3, max: 5, text: "Vidutinė" },
-  findings: [
-    "Didesnė dalis investicijų – vieno regiono rinkose.",
-    "Pavienių akcijų dalis didina koncentracijos riziką.",
-    "Išlaidų lygis – palyginti žemas.",
-  ],
-};
-
 /**
  * „Kelias iki pokalbio“ – 3 klausimai. Atsakymai niekur nesiunčiami ir nesaugomi;
  * jie tik parenka paslaugą ir bendro pobūdžio paaiškinimą (ne investavimo rekomendaciją).
@@ -290,88 +210,6 @@ export const guidedPath = {
   back: "Atgal",
 };
 
-/** DEMONSTRACINIS portfelio palyginimas „prieš / po“ – išgalvoti duomenys, ne rezultatų pažadas. */
-export const portfolioCompare = {
-  title: "Ką reiškia struktūruotas portfelis",
-  lead: "Pavyzdys, kaip konsultacijos metu gali pasikeisti požiūris į tą patį portfelį: kas jame yra, kiek jis diversifikuotas ir kokia rizika prisiimama.",
-  badge: "Demonstracinis pavyzdys",
-  disclaimer:
-    "Duomenys išgalvoti ir skirti tik iliustracijai. Tai nėra rezultatų pažadas ar investavimo rekomendacija – sprendimai priklauso nuo jūsų tikslų ir rizikos tolerancijos.",
-  states: {
-    before: {
-      label: "Prieš konsultaciją",
-      assets: [
-        { label: "Pavienės akcijos", value: 62 },
-        { label: "Akcijų ETF", value: 18 },
-        { label: "Obligacijų ETF", value: 0 },
-        { label: "Grynieji pinigai", value: 20 },
-      ],
-      regions: [
-        { label: "Šiaurės Amerika", value: 84 },
-        { label: "Europa", value: 11 },
-        { label: "Kiti regionai", value: 5 },
-      ],
-      metrics: [
-        { label: "Pozicijų", value: "3" },
-        { label: "Didžiausia pozicija", value: "41 %" },
-        { label: "Vid. išlaidų koef.", value: "0,74 %" },
-      ],
-      risk: { value: 4, text: "Aukšta" },
-      note: "Didelė dalis – keliose pavienėse akcijose ir viename regione.",
-    },
-    after: {
-      label: "Po konsultacijos",
-      assets: [
-        { label: "Pavienės akcijos", value: 10 },
-        { label: "Akcijų ETF", value: 55 },
-        { label: "Obligacijų ETF", value: 30 },
-        { label: "Grynieji pinigai", value: 5 },
-      ],
-      regions: [
-        { label: "Šiaurės Amerika", value: 55 },
-        { label: "Europa", value: 27 },
-        { label: "Kiti regionai", value: 18 },
-      ],
-      metrics: [
-        { label: "Pozicijų", value: "7" },
-        { label: "Didžiausia pozicija", value: "32 %" },
-        { label: "Vid. išlaidų koef.", value: "0,21 %" },
-      ],
-      risk: { value: 3, text: "Vidutinė" },
-      note: "Rizika paskirstyta tarp turto klasių ir regionų pagal pasirinktą profilį.",
-    },
-  },
-};
-
-/**
- * DEMONSTRACINIS konsultacijos plano pavyzdys.
- * TODO: patvirtinti su klientu, ar po konsultacijos pateikiamas rašytinis planas ir kokios formos.
- */
-export const planPreview = {
-  title: "Kaip gali atrodyti jūsų planas",
-  lead: "Konsultacijos esmė – aiškumas. Pavyzdys, kaip gali būti susisteminti jūsų tikslai, sprendimai ir tolesni žingsniai.",
-  badge: "Pavyzdys",
-  disclaimer: "Demonstracinis pavyzdys – tikslus turinys ir forma priklauso nuo jūsų situacijos.",
-  pages: [
-    {
-      title: "Situacijos santrauka",
-      rows: ["Tikslas: kaupti ilgalaikiam tikslui", "Laikotarpis: daugiau nei 10 metų", "Rizikos tolerancija: vidutinė"],
-    },
-    {
-      title: "Lėšų paskirstymas",
-      bars: [
-        { label: "Akcijų ETF", value: 60 },
-        { label: "Obligacijų ETF", value: 30 },
-        { label: "Grynieji", value: 10 },
-      ],
-    },
-    {
-      title: "Tolesni žingsniai",
-      rows: ["Pasirinkti platformą pagal įkainius", "Nustatyti reguliarią investiciją", "Peržiūrėti strategiją kas 12 mėn."],
-    },
-  ],
-};
-
 export const calculator = {
   title: "Skaičiuoklė",
   lead: "Pažiūrėkite, kaip laikas ir reguliarumas gali paveikti sukauptą sumą.",
@@ -381,7 +219,10 @@ export const calculator = {
   defaults: { initial: 1000, monthly: 100, years: 15, rate: 5 },
   link: "Atidaryti skaičiuoklę",
   question: "Kiek galėtų sukaupti reguliarumas?",
-  // Kliento pageidavimu: grąža iki 25 %, paprastesni pavadinimai (įspėjimas lieka nepakeistas).
+  // Kliento pageidavimu: sumos iki 500 000 € / 10 000 € per mėn., grąža iki 25 %,
+  // paprastesni pavadinimai (įspėjimas lieka nepakeistas).
+  initialMax: 500000,
+  monthlyMax: 10000,
   rateLabel: "Metinė grąža",
   rateMax: 25,
   paidLabel: "Investuota",

@@ -23,10 +23,10 @@ function siteUrl(): URL {
 
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
-  title: `${brand.name} – ${brand.role.toLowerCase()}`,
+  title: `${brand.siteName} – ${brand.name}, ${brand.role.toLowerCase()}`,
   description:
     "Padedu žmonėms pradėti investuoti, susidėlioti individualią investavimo strategiją ir protingai valdyti savo investicijas.",
-  // Dizaino krypčių peržiūra neturi būti indeksuojama.
+  // TODO: kol nuotraukos ir tekstai pavyzdiniai – neindeksuojama. Prieš paleidžiant pašalinti.
   robots: { index: false, follow: false },
 };
 
@@ -37,8 +37,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // suppressHydrationWarning: 13 krypties įžangos skriptas prieš hidrataciją prideda klasę <html> elementui
-    <html lang="lt" suppressHydrationWarning>
+    <html lang="lt">
       <body>
         {children}
         <RevealObserver />

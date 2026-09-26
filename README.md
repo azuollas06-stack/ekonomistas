@@ -1,72 +1,58 @@
-# Marius Lencevičius – pagrindinio puslapio dizaino kryptys
+# Ekonomisto užrašai – Marius Lencevičius
 
-5 skirtingos pagrindinio puslapio kryptys, iš kurių klientas renkasi vizualinę kryptį.
-
-| Maršrutas     | Kryptis                    |
-| ------------- | -------------------------- |
-| `/`           | Visų krypčių sąrašas       |
-| `/design-01`  | Minimalistinė              |
-| `/design-02`  | Leidinio (editorial)       |
-| `/design-03`  | Moderni konsultanto        |
-| `/design-04`  | Asmeninis prekės ženklas   |
-| `/design-05`  | Tamsi premium              |
-| `/design-06`  | Augimo kreivė (eksperimentinė, mobile-first) |
-| `/design-07`  | Fintech programėlė (eksperimentinė, mobile-first) |
-| `/design-08`  | Kinetinė tipografija (eksperimentinė, mobile-first) |
-| `/design-09`  | Aurora / stiklas (eksperimentinė, mobile-first) |
-
-06–09 naudoja laisvas spalvas ir daugiau animacijų. Animacijos – be bibliotekų (`components/fx/`):
-CSS scroll-driven animacijos (su atsarginiu variantu senesnėms naršyklėms), `CountUp`, `WordCycler`,
-`GrowthLine`, `Tilt`, `StickyCta`, `SituationSheet` (naršyklės `<dialog>`). Visur gerbiamas `prefers-reduced-motion`.
+Nepriklausomo investavimo konsultanto svetainės pagrindinis puslapis (`/`).
+Iš 14 dizaino krypčių klientas pasirinko 11-ąją – kitos pašalintos (yra git istorijoje),
+o seni adresai `/design-XX` nukreipiami į `/`.
 
 ## Paleidimas
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000
-npm run build      # production build (visi puslapiai statiniai)
+npm run build      # production build
 ```
 
 Stack: Next.js 16 (App Router) + TypeScript + CSS Modules. Jokių UI / animacijų bibliotekų.
+Visur gerbiamas `prefers-reduced-motion`.
 
 ## Struktūra
 
-- `content/site.ts` – **visas tekstas vienoje vietoje**. Visi 5 variantai naudoja tuos pačius duomenis.
-- `app/design-0X/` – kiekvieno varianto `page.tsx` + `page.module.css`.
-- `components/shared/` – bendri komponentai:
-  - `Photo` – nuotrauka arba neutralus placeholderis
-  - `SituationPicker` – „Kur esate šiandien?“ (WAI-ARIA tabs, klaviatūra)
-  - `PortfolioXray` – statinis DEMONSTRACINIS portfelio pavyzdys
-  - `CalculatorTeaser` – iliustracinė skaičiuoklė (ne prognozė)
-  - `MobileNav`, `RevealObserver`, `ConsentButton`, `DesignSwitcher`
+- `content/site.ts` – **visas tekstas vienoje vietoje** (paslaugos, DUK, formos ir skaičiuoklės tekstai, ribos).
+- `components/home/HomePage.tsx` – puslapis; tamsios ir šviesios sekcijos susilieja per `.blendToLight` / `.blendToDark`.
+- `components/fx/`:
+  - `GuidedPath` – „Raskime jums tinkamą pradžią“ (3 klausimai, niekas nesiunčiama)
+  - `IntroForm` – registracija pokalbiui; paspaudus elementą su `data-topic`, situacija formoje parenkama automatiškai
+  - `CalculatorSheet` + `Calculator` – skaičiuoklė atskirame lange, atsidaro tik iš meniu „Skaičiuoklė“ (arba `/#skaiciuokle`)
+  - `useModalDialog` – natūralus `<dialog>` su animuotu uždarymu, fokuso ir slinkimo valdymu
+  - `CountUp`, `ScrollHeader`
+- `components/shared/` – `Photo`, `MobileNav`, `RevealObserver`, `ConsentButton`.
+- `lib/forms/` – formos validacija (`intro-call.ts`) ir serverio veiksmas (`actions.ts`).
 - `lib/consent.ts` – vieta būsimam slapukų sutikimo (CMP) sprendimui.
-- `lib/forms/intro-call.ts` – būsimos registracijos formos serverio pusės validacija.
 
 ## Dažnos užduotys
 
-**Pakeisti nuotraukas.** Dabar naudojamos kliento pateiktos pavyzdinės nuotraukos (su „PAVYZDIS“ ženklu).
-Įkelkite tikras į `public/images/` tais pačiais pavadinimais arba pakeiskite `photos` objektą `content/site.ts`
-(taip pat atnaujinkite `width`/`height`). `src: null` – rodomas placeholderis „Mariaus portretas“.
+**Prijungti formą.** `lib/forms/actions.ts` → vietoje TODO išsiųsti laišką (pvz. per Resend), kai klientas
+pateiks el. paštą. Tada `introForm.preview*` tekstus `content/site.ts` pakeisti tikru patvirtinimu.
+
+**Pakeisti nuotraukas.** Dabar naudojamos pavyzdinės nuotraukos (su „PAVYZDIS“ ženklu).
+Įkelkite tikras į `public/images/` tais pačiais pavadinimais arba pakeiskite `photos` objektą `content/site.ts`.
 
 **Įjungti TT Commons Pro.** Įdėkite licencijuotus `.woff2` failus į `public/fonts/tt-commons-pro/` ir
-atkomentuokite `@font-face` blokus `styles/fonts.css`. Kol failų nėra – naudojamas sisteminis šriftas.
+atkomentuokite `@font-face` blokus `styles/fonts.css`.
 
-**Pridėti 5-ą paslaugą.** Pridėkite naują objektą į `services` masyvą `content/site.ts` (su `situation` lauku).
-Sąrašai, tinkleliai ir „Kur esate šiandien?“ prisitaikys automatiškai.
+**Pridėti paslaugą.** Naujas objektas `services` masyve – kortelės, 3 klausimų kelias ir formos pasirinkimai prisitaikys.
 
-**Atsiliepimai.** `testimonials` masyvas tuščias – kryptyje 04 rodomos aiškiai pažymėtos vietos.
-Pildyti tik tikrais atsiliepimais su kliento sutikimu.
+**Atsiliepimai.** `testimonials` tuščias – rodomi aiškiai pažymėti pavyzdžiai. Pildyti tik tikrais, su kliento sutikimu.
 
-## Laukia kliento patvirtinimo
+## Prieš paleidžiant
 
-- Kontaktai (el. paštas, telefonas) – `brand.email` / `brand.phone`.
-- DUK atsakymai ir proceso aprašymai (parašyti neutraliai, be pažadų).
-- „Investavimo užrašų“ temos – pakeisti tikrais Instagram įrašais.
-- Teisinė veiklos apimtis: svetainėje naudojamas tik kliento pateiktas teiginys apie BFAA (IA) licenciją.
+- Forma: el. paštas, siuntimo paslauga, tikra privatumo politika (`footer.links`).
+- Tikros nuotraukos, DUK atsakymų ir „Investavimo užrašų“ temų patvirtinimas.
+- Skaičiuoklės ribos (grąža iki 25 %) ir užrašas „Uždirbta“ – kliento sprendimas; įspėjimas palikti.
+- `app/layout.tsx` – pašalinti `robots: noindex`.
 
-## Saugumas / privatumas (paruošta vėlesniam etapui)
+## Saugumas / privatumas
 
 - Jokių raktų frontend'e. Slapti kintamieji – tik be `NEXT_PUBLIC_` prefikso (žr. `.env.example`).
-- Formų validacija – serveryje (`lib/forms/intro-call.ts`), renkami tik minimalūs duomenys.
+- Formos validacija – ir naršyklėje, ir serveryje; renkama tik tai, ko reikia susisiekti.
 - Bazinės saugumo antraštės – `next.config.ts`.
-- `robots: noindex` – dizaino peržiūra neindeksuojama.

@@ -24,14 +24,18 @@
 
 /* ---------- REZULTATAS (tamsi kortelė) ---------- */
 .result {
+  /* skaičiaus dydis skaičiuojamas pagal kortelės plotį */
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
   border-radius: 1.25rem;
   background:
-    radial-gradient(40rem circle at 100% 0%, rgb(242 233 228 / 0.08), transparent 55%),
-    #17181f;
+    radial-gradient(70% 80% at 100% 0%, rgb(74 78 105 / 0.55), transparent 70%),
+    radial-gradient(60% 60% at 0% 100%, rgb(242 233 228 / 0.05), transparent 70%),
+    #16171e;
   color: #f2e9e4;
+  box-shadow: inset 0 0 0 1px rgb(242 233 228 / 0.06);
 }
 @media (min-width: 960px) {
   .result {
@@ -61,8 +65,10 @@
   font-variant-numeric: tabular-nums;
 }
 .total {
-  font-size: clamp(2.5rem, 11cqi, 4.25rem);
+  /* ilgesnis skaičius – mažesnis šriftas, bet ne daugiau nei 4,25rem */
+  font-size: min(4.25rem, 100cqi / (var(--chars, 8) * 0.58));
   line-height: 1;
+  white-space: nowrap;
   font-weight: 300;
   letter-spacing: -0.045em;
   font-variant-numeric: tabular-nums;
@@ -97,9 +103,20 @@
   color: rgb(242 233 228 / 0.65);
 }
 .legend dd {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   margin: 0.2rem 0 0;
   font-size: 1.125rem;
   font-variant-numeric: tabular-nums;
+}
+/* uždirbtos dalies procentas nuo visos sumos */
+.share {
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgb(242 233 228 / 0.1);
+  font-size: 0.75rem;
+  color: rgb(242 233 228 / 0.8);
 }
 .keyPaid,
 .keyGrowth {
@@ -121,6 +138,16 @@
 }
 .plot {
   position: relative;
+}
+/* viršutinės linijos vertė – kad būtų aiškus grafiko mastelis */
+.scale {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.6875rem;
+  color: rgb(242 233 228 / 0.45);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
 }
 .chart {
   display: block;
@@ -214,10 +241,72 @@
   font-size: 0.875rem;
   color: var(--muted);
 }
-.value {
+.value,
+.valueInput {
   font-size: 1.125rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
+}
+/* reikšmė atrodo kaip tekstas, bet paspaudus ją galima įvesti ranka */
+.valueInput {
+  /* plotis pagal turinį (senesnėse naršyklėse – fiksuotas, žr. žemiau) */
+  field-sizing: content;
+  min-width: 3.5rem;
+  max-width: 10rem;
+  padding: 0.15rem 0.1rem;
+  border: 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--ink) 35%, transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--fg);
+  font-family: inherit;
+  text-align: right;
+  cursor: text;
+  transition:
+    border-color 0.25s,
+    background 0.25s;
+}
+@supports not (field-sizing: content) {
+  .valueInput {
+    width: 7.5rem;
+  }
+}
+.valueInput:hover {
+  border-bottom-color: var(--ink);
+}
+.valueInput:focus {
+  outline: none;
+  border-bottom: 1px solid var(--ink);
+  background: var(--soft);
+}
+
+/* telefone – lipni suvestinė lango viršuje (po juosta su pavadinimu) */
+.mini {
+  position: sticky;
+  top: var(--calc-sticky-top, 0px);
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin: -0.5rem -0.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: #16171e;
+  color: #f2e9e4;
+  font-size: 0.8125rem;
+  box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.5);
+}
+.mini b {
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 960px) {
+  .mini {
+    display: none;
+  }
 }
 .presets {
   display: grid;
